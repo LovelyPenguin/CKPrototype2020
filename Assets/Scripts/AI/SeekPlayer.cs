@@ -6,9 +6,18 @@ using UnityEngine.AI;
 public class SeekPlayer : MonoBehaviour
 {
     private NavMeshAgent myAgent;
+
     public Transform player;
-    [Range(1,180)]
-    public float detectAngle;
+
+    [Header("Seek Setting")]
+    [Range(1, 360)]
+    public float seekAngle;
+    public float seekDistance;
+
+    [Header("Attack Setting")]
+    [Range(1, 360)]
+    public float attackAngle;
+    public float attackDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -52,5 +61,9 @@ public class SeekPlayer : MonoBehaviour
     public void Attack()
     {
         Debug.Log("Attack");
+    }
+    public float GetPlayerDistance()
+    {
+        return Vector3.Distance(transform.position, player.position);
     }
 }

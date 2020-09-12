@@ -357,7 +357,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1307229485}
-  detectAngle: 1
+  seekAngle: 32
+  seekDistance: 12.76
+  attackAngle: 82
+  attackDistance: 2.69
 --- !u!195 &222387768
 NavMeshAgent:
   m_ObjectHideFlags: 0
