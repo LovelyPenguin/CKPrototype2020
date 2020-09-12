@@ -318,6 +318,7 @@ GameObject:
   - component: {fileID: 222387766}
   - component: {fileID: 222387768}
   - component: {fileID: 222387767}
+  - component: {fileID: 222387769}
   m_Layer: 0
   m_Name: AI_Proto
   m_TagString: Untagged
@@ -379,6 +380,25 @@ NavMeshAgent:
   m_BaseOffset: 0.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &222387769
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222387765}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8182d66795ac1e4782df3af8dcc3de6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &268903726
 GameObject:
   m_ObjectHideFlags: 0

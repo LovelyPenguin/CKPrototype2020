@@ -19,7 +19,7 @@ public class SeekPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(CalculateAngle(player.position));
+
     }
 
     private float CalculateAngle(Vector3 target)
@@ -30,5 +30,27 @@ public class SeekPlayer : MonoBehaviour
             )) * Mathf.Rad2Deg;
         float originAngle = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
         return value;
+    }
+
+    public float GetPlayerAngle()
+    {
+        return CalculateAngle(player.position);
+    }
+
+    public void RandomMove()
+    {
+        Debug.Log("Random Move");
+        myAgent.SetDestination(Vector3.zero);
+    }
+
+    public void Seek()
+    {
+        Debug.Log("Seek Player");
+        myAgent.SetDestination(player.position);
+    }
+
+    public void Attack()
+    {
+        Debug.Log("Attack");
     }
 }
