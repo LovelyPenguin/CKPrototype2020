@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Inspector Field
+    public PLAYERSTATE state = PLAYERSTATE.FLYING;
+
+    [Range(0, 10)]
+    public float movementSpeed = 5f;
+
+    [Range(1, 20)]
+    public float cameraDistance = 10f;
+
+
+    public Transform targetTransform;
+    public Transform cameraTransform;
+    public Transform camRootTransform;
+
+    public LandingProcess landing;
+    // Inspector Field
+
     public enum PLAYERSTATE
     {
         NONE,
@@ -13,19 +30,11 @@ public class PlayerMovement : MonoBehaviour
         CANNOTMOVE,
         DEAD
     }
-    public PLAYERSTATE state = PLAYERSTATE.FLYING;
 
 
-    public Transform targetTransform;
-    public Transform cameraTransform;
-    public Transform camRootTransform;
 
-    public LandingProcess landing;
 
-    [Range(0, 10)]
-    public float movementSpeed = 5f;
-
-    [SerializeField] float verticalInput;
+    float verticalInput;
 
     Vector3 currentMoveInput;
     Vector3 targetPos;
@@ -142,6 +151,17 @@ public class PlayerMovement : MonoBehaviour
         currentCamRot = Vector3.SmoothDamp(currentCamRot, targetCamRot, ref currentCamRotVelocity, camRotSmoothTime);
         camRootTransform.rotation = Quaternion.Euler(currentCamRot);
 
+        //Avoid cam penetration
+        RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
+        if (hits.Length > 0)
+        {
+            Debug.Log($"{hits[0].transform.gameObject.name}, pos : {hits[0].point}");
+            cameraTransform.position = hits[0].point + camRootTransform.forward * 0.1f;
+        }
+        else
+        {
+            cameraTransform.position = camRootTransform.position + (camRootTransform.forward * -cameraDistance);
+        }
     }
 
 
@@ -172,10 +192,16 @@ public class PlayerMovement : MonoBehaviour
         currentCamRot = Vector3.SmoothDamp(currentCamRot, targetCamRot, ref currentCamRotVelocity, camRotSmoothTime);
         camRootTransform.rotation = Quaternion.Euler(currentCamRot);
 
-        RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, 10f);
+        //Avoid cam penetration
+        RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
         if (hits.Length > 0)
         {
-            //Debug.Log($"{hits[0].transform.gameObject.name}, pos : {hits[0].point}");
+            Debug.Log($"{hits[0].transform.gameObject.name}, pos : {hits[0].point}");
+            cameraTransform.position = hits[0].point + camRootTransform.forward * 0.1f;
+        }
+        else
+        {
+            cameraTransform.position = camRootTransform.position + (camRootTransform.forward * -cameraDistance);
         }
 
 
