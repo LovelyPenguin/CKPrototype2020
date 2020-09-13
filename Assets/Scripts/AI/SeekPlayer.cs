@@ -6,8 +6,12 @@ using UnityEngine.AI;
 public class SeekPlayer : MonoBehaviour
 {
     private NavMeshAgent myAgent;
+    private float setRandomMoveInterval = 0;
 
     public Transform player;
+    
+    [Header("Move Setting")]
+    public float randomMoveInterval = 0;
 
     [Header("Seek Setting")]
     [Range(1, 360)]
@@ -18,6 +22,7 @@ public class SeekPlayer : MonoBehaviour
     [Range(1, 360)]
     public float attackAngle;
     public float attackDistance;
+    public float reactionSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -41,29 +46,38 @@ public class SeekPlayer : MonoBehaviour
         return value;
     }
 
-    public float GetPlayerAngle()
-    {
-        return CalculateAngle(player.position);
-    }
-
     public void RandomMove()
     {
-        Debug.Log("Random Move");
-        myAgent.SetDestination(Vector3.zero);
+        //Debug.Log("Random Move");
+        setRandomMoveInterval += Time.deltaTime;
+
+        if (randomMoveInterval <= setRandomMoveInterval)
+        {
+            myAgent.SetDestination(new Vector3(Random.Range(-10, 10), transform.position.y, Random.Range(-10, 10)));
+            setRandomMoveInterval = 0;
+        }
     }
 
     public void Seek()
     {
         Debug.Log("Seek Player");
+        myAgent.isStopped = false;
         myAgent.SetDestination(player.position);
     }
 
     public void Attack()
     {
         Debug.Log("Attack");
+        myAgent.isStopped = true;
     }
+
     public float GetPlayerDistance()
     {
         return Vector3.Distance(transform.position, player.position);
+    }
+
+    public float GetPlayerAngle()
+    {
+        return CalculateAngle(player.position);
     }
 }

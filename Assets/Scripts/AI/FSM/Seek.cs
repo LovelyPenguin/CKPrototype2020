@@ -15,11 +15,13 @@ public class Seek : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy.GetPlayerAngle() > 60.0f)
+        if (enemy.GetPlayerAngle() <= enemy.attackAngle &&
+            enemy.GetPlayerDistance() <= enemy.attackDistance)
         {
-            animator.SetBool("isSight", false);
+            enemy.Attack();
         }
-        else
+        else if (enemy.GetPlayerAngle() <= enemy.seekAngle &&
+            enemy.GetPlayerDistance() <= enemy.seekDistance)
         {
             enemy.Seek();
         }
