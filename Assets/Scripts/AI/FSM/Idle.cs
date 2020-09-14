@@ -15,7 +15,10 @@ public class Idle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy.GetPlayerAngle() <= enemy.seekAngle)
+        enemy.RandomMove();
+
+        if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
+            enemy.GetPlayerDistance() <= enemy.seekDistance)
         {
             animator.SetBool("isSight", true);
         }
@@ -23,14 +26,13 @@ public class Idle : StateMachineBehaviour
         {
             animator.SetBool("isSight", false);
         }
-        enemy.RandomMove();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

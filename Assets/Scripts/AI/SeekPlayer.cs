@@ -7,8 +7,11 @@ public class SeekPlayer : MonoBehaviour
 {
     private NavMeshAgent myAgent;
     private float setRandomMoveInterval = 0;
+    private float setReactionSpeed = 0;
 
+    [Header("Basic Setting")]
     public Transform player;
+    public ParticleSystem particle;
     
     [Header("Move Setting")]
     public float randomMoveInterval = 0;
@@ -23,17 +26,25 @@ public class SeekPlayer : MonoBehaviour
     public float attackAngle;
     public float attackDistance;
     public float reactionSpeed;
+    public float rotationSpeed;
+
+    [Header("Rage Setting")]
+    public float fireInterval;
+    public float restInterval;
+
+    public float debugValue;
 
     // Start is called before the first frame update
     void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
+        particle.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        debugValue = (CalculateAngle(player.position));
     }
 
     private float CalculateAngle(Vector3 target)
@@ -46,9 +57,22 @@ public class SeekPlayer : MonoBehaviour
         return value;
     }
 
+    public void SetAttack(bool isAttack)
+    {
+        if (isAttack)
+        {
+            particle.Play();
+        }
+        else
+        {
+            particle.Stop();
+            setReactionSpeed = 0;
+        }
+    }
+
     public void RandomMove()
     {
-        //Debug.Log("Random Move");
+        myAgent.isStopped = false;
         setRandomMoveInterval += Time.deltaTime;
 
         if (randomMoveInterval <= setRandomMoveInterval)
@@ -61,6 +85,7 @@ public class SeekPlayer : MonoBehaviour
     public void Seek()
     {
         Debug.Log("Seek Player");
+        SetAttack(false);
         myAgent.isStopped = false;
         myAgent.SetDestination(player.position);
     }
@@ -69,6 +94,40 @@ public class SeekPlayer : MonoBehaviour
     {
         Debug.Log("Attack");
         myAgent.isStopped = true;
+        setReactionSpeed += Time.deltaTime;
+
+        Vector3 targetPos = player.position - transform.position;
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation, 
+            Quaternion.LookRotation(new Vector3(targetPos.x, 0, targetPos.z)), Time.deltaTime * rotationSpeed);
+        if (setReactionSpeed <= reactionSpeed)
+        {
+            SetAttack(true);
+        }
+    }
+
+    public void Rage()
+    {
+        StartCoroutine(FireOrder());
+        Debug.Log("Rage");
+    }
+    public void RageEnd()
+    {
+        StopCoroutine(FireOrder());
+        StopCoroutine(RestOrder());
+    }
+
+    private IEnumerator FireOrder()
+    {
+        SetAttack(true);
+        yield return new WaitForSeconds(fireInterval);
+        StartCoroutine(RestOrder());
+    }
+    private IEnumerator RestOrder()
+    {
+        SetAttack(false);
+        yield return new WaitForSeconds(restInterval);
+        StartCoroutine(FireOrder());
     }
 
     public float GetPlayerDistance()

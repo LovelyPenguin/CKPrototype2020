@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Seek : StateMachineBehaviour
+public class Rage : StateMachineBehaviour
 {
     public SeekPlayer enemy;
 
@@ -10,20 +10,18 @@ public class Seek : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy = animator.GetComponent<SeekPlayer>();
+        enemy.Rage();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy.GetPlayerAngle() <= enemy.attackAngle / 2 &&
-            enemy.GetPlayerDistance() <= enemy.attackDistance)
-        {
-            enemy.Attack();
-        }
-        else if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
+        enemy.RandomMove();
+
+        if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
             enemy.GetPlayerDistance() <= enemy.seekDistance)
         {
-            enemy.Seek();
+            animator.SetBool("isSight", true);
         }
         else
         {
@@ -34,7 +32,7 @@ public class Seek : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy.SetAttack(false);
+        enemy.RageEnd();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
