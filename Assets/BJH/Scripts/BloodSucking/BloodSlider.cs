@@ -55,8 +55,6 @@ public class BloodSlider : MonoBehaviour
         maxPos = handle.position;
         slider.value = 0;
         minPos = handle.position;
-
-        Debug.Log($"{minPos}, {maxPos}");
     }
 
     IEnumerator SuckingCo()
