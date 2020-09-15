@@ -49,9 +49,9 @@ public class SeekPlayer : MonoBehaviour
 
     private float CalculateAngle(Vector3 target)
     {
-        Vector3 v = target - transform.position;
+        Vector3 v = new Vector3(target.x - transform.position.x, 0, target.z - transform.position.z);
         float value = Mathf.Acos(
-            Vector3.Dot(transform.forward, Vector3.Normalize(target - transform.position)
+            Vector3.Dot(transform.forward, Vector3.Normalize(v)
             )) * Mathf.Rad2Deg;
         float originAngle = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
         return value;
@@ -132,7 +132,10 @@ public class SeekPlayer : MonoBehaviour
 
     public float GetPlayerDistance()
     {
-        return Vector3.Distance(transform.position, player.position);
+        Vector3 convertTransformPos = new Vector3(transform.position.x, 0, transform.position.z);
+        Vector3 convertPlayerPos = new Vector3(player.position.x, 0, player.position.z);
+
+        return Vector3.Distance(convertPlayerPos, convertPlayerPos);
     }
 
     public float GetPlayerAngle()
