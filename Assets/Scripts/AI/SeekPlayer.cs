@@ -12,9 +12,12 @@ public class SeekPlayer : MonoBehaviour
     [Header("Basic Setting")]
     public Transform player;
     public ParticleSystem particle;
-    
+    public Animator animator;
+    public Vector3 lightSwitchLocation;
+
     [Header("Move Setting")]
     public float randomMoveInterval = 0;
+    public float randomMoveRange;
 
     [Header("Seek Setting")]
     [Range(1, 360)]
@@ -32,7 +35,16 @@ public class SeekPlayer : MonoBehaviour
     public float fireInterval;
     public float restInterval;
 
-    public float debugValue;
+    [Header("")]
+    public float debugAngle;
+    public float debugDistance;
+    public int currentAngryGauge
+    {
+        get
+        {
+            return animator.GetInteger("angryGauge");
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +56,8 @@ public class SeekPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        debugValue = (CalculateAngle(player.position));
+        debugAngle = CalculateAngle(player.position);
+        debugDistance = GetPlayerDistance();
     }
 
     private float CalculateAngle(Vector3 target)
@@ -55,6 +68,11 @@ public class SeekPlayer : MonoBehaviour
             )) * Mathf.Rad2Deg;
         float originAngle = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
         return value;
+    }
+
+    private bool HideFromPlayer()
+    {
+        return true;
     }
 
     public void SetAttack(bool isAttack)
@@ -77,7 +95,9 @@ public class SeekPlayer : MonoBehaviour
 
         if (randomMoveInterval <= setRandomMoveInterval)
         {
-            myAgent.SetDestination(new Vector3(Random.Range(-10, 10), transform.position.y, Random.Range(-10, 10)));
+            myAgent.SetDestination(new Vector3(
+                Random.Range(-randomMoveRange, randomMoveRange), transform.position.y, 
+                Random.Range(-randomMoveRange, randomMoveRange)));
             setRandomMoveInterval = 0;
         }
     }
@@ -88,6 +108,7 @@ public class SeekPlayer : MonoBehaviour
         SetAttack(false);
         myAgent.isStopped = false;
         myAgent.SetDestination(player.position);
+        //transform.rotation = LookRotationTarget(player.position, 99);
     }
 
     public void Attack()
@@ -96,27 +117,12 @@ public class SeekPlayer : MonoBehaviour
         myAgent.isStopped = true;
         setReactionSpeed += Time.deltaTime;
 
-        Vector3 targetPos = player.position - transform.position;
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation, 
-            Quaternion.LookRotation(new Vector3(targetPos.x, 0, targetPos.z)), Time.deltaTime * rotationSpeed);
+        transform.rotation = LookRotationTarget(player.position, rotationSpeed);
         if (setReactionSpeed <= reactionSpeed)
         {
             SetAttack(true);
         }
     }
-
-    public void Rage()
-    {
-        StartCoroutine(FireOrder());
-        Debug.Log("Rage");
-    }
-    public void RageEnd()
-    {
-        StopCoroutine(FireOrder());
-        StopCoroutine(RestOrder());
-    }
-
     private IEnumerator FireOrder()
     {
         SetAttack(true);
@@ -130,16 +136,80 @@ public class SeekPlayer : MonoBehaviour
         StartCoroutine(FireOrder());
     }
 
+    public void Rage()
+    {
+        StartCoroutine(FireOrder());
+        Debug.Log("Rage");
+    }
+    public void RageEnd()
+    {
+        StopCoroutine(FireOrder());
+        StopCoroutine(RestOrder());
+    }
+
+    private float timer = 0;
+    public bool LightOnOff()
+    {
+        myAgent.SetDestination(lightSwitchLocation);
+        if (!myAgent.pathPending)
+        {
+            if (myAgent.remainingDistance <= myAgent.stoppingDistance)
+            {
+                if (!myAgent.hasPath || myAgent.velocity.sqrMagnitude == 0f)
+                {
+                    Debug.Log("Light Off");
+                    transform.rotation = LookRotationTarget(player.position, 5f);
+                    timer += Time.deltaTime;
+
+                    if (timer >= 5f)
+                    {
+                        Debug.Log("Light On!");
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public float GetPlayerDistance()
     {
-        Vector3 convertTransformPos = new Vector3(transform.position.x, 0, transform.position.z);
-        Vector3 convertPlayerPos = new Vector3(player.position.x, 0, player.position.z);
+        Vector3 convertTransformPos = new Vector3(transform.position.x, 1, transform.position.z);
+        Vector3 convertPlayerPos = new Vector3(player.position.x, 1, player.position.z);
 
-        return Vector3.Distance(convertPlayerPos, convertPlayerPos);
+        return Vector3.Distance(convertTransformPos, convertPlayerPos);
     }
 
     public float GetPlayerAngle()
     {
         return CalculateAngle(player.position);
+    }
+
+    public void SetAngryGauge(int value)
+    {
+        animator.SetInteger("angryGauge", value);
+    }
+
+    public Quaternion LookRotationTarget(Vector3 player, float rotationSpeed)
+    {
+        Vector3 targetPos = player - transform.position;
+        return Quaternion.Lerp(
+            transform.rotation,
+            Quaternion.LookRotation(new Vector3(targetPos.x, 0, targetPos.z)), Time.deltaTime * rotationSpeed);
     }
 }
