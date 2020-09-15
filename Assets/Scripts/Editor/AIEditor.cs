@@ -21,6 +21,8 @@ namespace AIDetect
             Handles.color = new Color(1.0f, 0.5f, 0.5f, 0.1f);
             Handles.DrawSolidArc(transform.position, transform.up, transform.forward, ai.attackAngle / 2, ai.attackDistance);
             Handles.DrawSolidArc(transform.position, transform.up, transform.forward, -ai.attackAngle / 2, ai.attackDistance);
+
+            //Handles.DrawSolidDisc(transform.position, Vector3.up, 10);
         }
     }
 }
