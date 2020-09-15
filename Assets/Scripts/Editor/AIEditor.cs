@@ -5,13 +5,13 @@ using UnityEditor;
 
 namespace AIDetect
 {
-    [CustomEditor(typeof(SeekPlayer))]
+    [CustomEditor(typeof(AIMaster))]
     [CanEditMultipleObjects]
     public class AIEditor : Editor
     {
         private void OnSceneGUI()
         {
-            SeekPlayer ai = (SeekPlayer)target;
+            AIMaster ai = (AIMaster)target;
             Transform transform = ai.transform;
 
             Handles.color = new Color(0.5f, 0.5f, 1.0f, 0.2f);
