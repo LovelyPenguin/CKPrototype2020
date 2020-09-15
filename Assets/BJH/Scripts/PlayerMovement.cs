@@ -59,7 +59,17 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         Cursor.visible = false;
+        Debug.Log("aa");
 
+        InitValue();
+
+        moveSmoothTime = 0.05f;
+        camRotSmoothTime = 0.2f;
+        targetRotSmoothTime = 0.2f;
+    }
+
+    void InitValue()
+    {
         targetPos = targetTransform.position;
         currentPos = targetPos;
 
@@ -69,10 +79,8 @@ public class PlayerMovement : MonoBehaviour
         targetTargetRot = targetTransform.eulerAngles;
         currentTargetRot = targetTargetRot;
 
-        moveSmoothTime = 0.05f;
-        camRotSmoothTime = 0.2f;
-        targetRotSmoothTime = 0.2f;
     }
+
     public void SetMovementInput(Vector3 value)
     {
         currentMoveInput = value;
@@ -129,6 +137,10 @@ public class PlayerMovement : MonoBehaviour
 
         targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
         targetTransform.position = landing.landingPos;
+        targetTransform.rotation = Quaternion.LookRotation(-targetTransform.up);
+
+        targetPos = targetTransform.position;
+        currentPos = targetPos;
 
 
         state = PLAYERSTATE.LANDED;
@@ -142,32 +154,21 @@ public class PlayerMovement : MonoBehaviour
             FlyingMovement();
         }
 
-        //Cam Rotation
-        if (currentCamRotInput.sqrMagnitude > 0f)
-        {
-            targetCamRot += currentCamRotInput * Time.deltaTime * GameSettings.instance.sensitivity;
-        }
-
-        currentCamRot = Vector3.SmoothDamp(currentCamRot, targetCamRot, ref currentCamRotVelocity, camRotSmoothTime);
-        camRootTransform.rotation = Quaternion.Euler(currentCamRot);
-
-        //Avoid cam penetration
-        RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
-        if (hits.Length > 0)
-        {
-            Debug.Log($"{hits[0].transform.gameObject.name}, pos : {hits[0].point}");
-            cameraTransform.position = hits[0].point + camRootTransform.forward * 0.1f;
-        }
-        else
-        {
-            cameraTransform.position = camRootTransform.position + (camRootTransform.forward * -cameraDistance);
-        }
+        CamRotation();
     }
 
 
     void FlyingMovement()
     {
+        Movement();
 
+        CamRotation();
+
+        TargetRotation();
+    }
+
+    void Movement()
+    {
         //Movement
         if (currentMoveInput.sqrMagnitude > 0f)
         {
@@ -181,11 +182,14 @@ public class PlayerMovement : MonoBehaviour
         currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
 
         targetTransform.position = currentPos;
+    }
 
+    void CamRotation()
+    {
         //Cam Rotation
         if (currentCamRotInput.sqrMagnitude > 0f)
         {
-            targetCamRot += currentCamRotInput * Time.deltaTime * GameSettings.instance.sensitivity;
+            targetCamRot += currentCamRotInput * Time.deltaTime * GameSettings.instance.sensitivity * 10;
         }
 
         targetCamRot.x = Mathf.Clamp(targetCamRot.x, -90, 90);
@@ -203,8 +207,10 @@ public class PlayerMovement : MonoBehaviour
         {
             cameraTransform.position = camRootTransform.position + (camRootTransform.forward * -cameraDistance);
         }
+    }
 
-
+    void TargetRotation()
+    {        
         //Target Rotation
 
         if (currentTargetRot != currentCamRot)
@@ -212,6 +218,5 @@ public class PlayerMovement : MonoBehaviour
             currentTargetRot = Vector3.SmoothDamp(currentTargetRot, currentCamRot, ref currentTargetRotVelocity, targetRotSmoothTime);
             targetTransform.rotation = Quaternion.Euler(currentTargetRot);
         }
-
     }
 }
