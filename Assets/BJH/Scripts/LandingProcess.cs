@@ -5,6 +5,10 @@ using UnityEngine;
 public class LandingProcess : MonoBehaviour
 {
     public bool isLanded = false;
+
+    public LayerMask colliderLayer;
+
+    public Transform landingTransform;
     public Vector3 landingNormal;
     public Vector3 landingPos;
 
@@ -34,9 +38,12 @@ public class LandingProcess : MonoBehaviour
     {
         if (isLanded) return;
 
-        if (collision.gameObject.name == "Plane")
+        int mask = (1 << collision.transform.gameObject.layer);
+
+        if ((mask & colliderLayer.value) != 0)
         {
             isLanded = true;
+            landingTransform = collision.transform;
             landingNormal = (collision.contacts[0].normal);
             landingPos = collision.contacts[0].point + landingNormal * 0.5f; 
         }

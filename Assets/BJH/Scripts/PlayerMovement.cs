@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     // Inspector Field
     public PLAYERSTATE state = PLAYERSTATE.FLYING;
 
-    [Range(0, 10)]
+    [Range(0, 100)]
     public float movementSpeed = 5f;
 
     [Range(1, 20)]
@@ -19,7 +19,15 @@ public class PlayerMovement : MonoBehaviour
     public Transform camRootTransform;
 
     public LandingProcess landing;
+
+    [Header("Smooth Time")]
+    [Range(0,1)]
+    [SerializeField] float camRotSmoothTime = 0.2f;
+    [Range(0, 1)]
+    [SerializeField] float targetRotSmoothTime = 0.2f;
     // Inspector Field
+
+    KeyBindings keys;
 
     public enum PLAYERSTATE
     {
@@ -40,32 +48,25 @@ public class PlayerMovement : MonoBehaviour
     Vector3 targetPos;
     Vector3 currentPos;
     Vector3 currentPosVelocity;
-    float moveSmoothTime;
+    float moveSmoothTime = 0.01f;
 
     Vector3 currentCamRotInput;
     Vector3 targetCamRot;
     Vector3 currentCamRot;
     Vector3 currentCamRotVelocity;
-    float camRotSmoothTime;
 
     Vector3 currentTargetRotInput;
     Vector3 targetTargetRot;
     Vector3 currentTargetRot;
     Vector3 currentTargetRotVelocity;
-    float targetRotSmoothTime;
 
 
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Debug.Log("aa");
+        //Cursor.visible = false;
 
         InitValue();
-
-        moveSmoothTime = 0.05f;
-        camRotSmoothTime = 0.2f;
-        targetRotSmoothTime = 0.2f;
     }
 
     void InitValue()
@@ -81,6 +82,11 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        keys = KeybindingManager.instance.keyBindings;
+    }
+
     public void SetMovementInput(Vector3 value)
     {
         currentMoveInput = value;
@@ -93,16 +99,17 @@ public class PlayerMovement : MonoBehaviour
 
     void GetInput()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (KeybindingManager.instance.IsGettingInput()) return;
+        if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
             state = PLAYERSTATE.FLYING;
             verticalInput = 1;
         }
-        else if (Input.GetKey(KeyCode.Q)) verticalInput = -1;
+        else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
         else verticalInput = 0;
 
-        SetMovementInput(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), verticalInput));
+        SetMovementInput(new Vector3(keys.GetAxisRaw("Horizontal"), keys.GetAxisRaw("Vertical"), verticalInput));
         SetRotationInput(new Vector2(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X")));
     }
     // Update is called once per frame
@@ -147,7 +154,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void LandedMovement()
     {
-        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0 || Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveForward)) ||
+            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveBackward)) ||
+            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveLeft)) ||
+            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveRight)) ||
+            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
             state = PLAYERSTATE.FLYING;
@@ -200,7 +211,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
         if (hits.Length > 0)
         {
-            Debug.Log($"{hits[0].transform.gameObject.name}, pos : {hits[0].point}");
             cameraTransform.position = hits[0].point + camRootTransform.forward * 0.1f;
         }
         else
