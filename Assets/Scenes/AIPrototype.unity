@@ -361,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1307229485}
   particle: {fileID: 1314310606}
-  animator: {fileID: 0}
+  animator: {fileID: 222387769}
   lightSwitchLocation: {x: 3.45, y: 0, z: 3.53}
   randomMoveInterval: 1.5
   randomMoveRange: 6
@@ -373,7 +373,8 @@ MonoBehaviour:
   rotationSpeed: 0.5
   fireInterval: 3
   restInterval: 3
-  debugValue: 0
+  debugAngle: 0
+  debugDistance: 0
 --- !u!195 &222387768
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -805,6 +806,8 @@ GameObject:
   m_Component:
   - component: {fileID: 790376431}
   - component: {fileID: 790376432}
+  - component: {fileID: 790376433}
+  - component: {fileID: 790376434}
   m_Layer: 0
   m_Name: R_EarTrigger
   m_TagString: Untagged
@@ -839,6 +842,35 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!54 &790376433
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790376430}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &790376434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790376430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8954c1efdb53174fa53b1fe0c529871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1001 &812621421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1293,9 +1325,10 @@ GameObject:
   - component: {fileID: 1307229483}
   - component: {fileID: 1307229482}
   - component: {fileID: 1307229486}
+  - component: {fileID: 1307229487}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1308,7 +1341,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307229481}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1386,6 +1419,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b58a03fad4f48246883c503441256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1307229487
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307229481}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1314310605
 GameObject:
   m_ObjectHideFlags: 0
@@ -6670,6 +6719,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2051818681}
   - component: {fileID: 2051818682}
+  - component: {fileID: 2051818683}
+  - component: {fileID: 2051818684}
   m_Layer: 0
   m_Name: L_EarTrigger
   m_TagString: Untagged
@@ -6704,6 +6755,35 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0.5, y: 0, z: 0}
+--- !u!54 &2051818683
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051818680}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2051818684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051818680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8954c1efdb53174fa53b1fe0c529871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1 &2052375439
 GameObject:
   m_ObjectHideFlags: 0

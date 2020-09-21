@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SeekPlayer : MonoBehaviour
+public class AIMaster : MonoBehaviour
 {
     private NavMeshAgent myAgent;
     private float setRandomMoveInterval = 0;

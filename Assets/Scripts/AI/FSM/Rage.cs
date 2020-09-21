@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Rage : StateMachineBehaviour
 {
-    public SeekPlayer enemy;
+    public AIMaster enemy;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy = animator.GetComponent<SeekPlayer>();
+        enemy = animator.GetComponent<AIMaster>();
         enemy.Rage();
         animator.SetBool("isRage", true);
     }
