@@ -8,6 +8,7 @@ public class AIMaster : MonoBehaviour
     private NavMeshAgent myAgent;
     private float setRandomMoveInterval = 0;
     private float setReactionSpeed = 0;
+    private float timer = 0;
 
     [Header("Basic Setting")]
     public Transform player;
@@ -38,18 +39,13 @@ public class AIMaster : MonoBehaviour
     [Header("")]
     public float debugAngle;
     public float debugDistance;
-    public int currentAngryGauge
-    {
-        get
-        {
-            return animator.GetInteger("angryGauge");
-        }
-    }
+    public float angryGauge;
 
     // Start is called before the first frame update
     void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
+        animator.SetFloat("angryGauge", angryGauge);
         particle.Stop();
     }
 
@@ -147,7 +143,6 @@ public class AIMaster : MonoBehaviour
         StopCoroutine(RestOrder());
     }
 
-    private float timer = 0;
     public bool LightOnOff()
     {
         myAgent.SetDestination(lightSwitchLocation);
@@ -200,9 +195,10 @@ public class AIMaster : MonoBehaviour
         return CalculateAngle(player.position);
     }
 
-    public void SetAngryGauge(int value)
+    public void IncreaseAngryGauge()
     {
-        animator.SetInteger("angryGauge", value);
+        angryGauge += Time.deltaTime * 2;
+        animator.SetFloat("angryGauge",angryGauge);
     }
 
     public Quaternion LookRotationTarget(Vector3 player, float rotationSpeed)

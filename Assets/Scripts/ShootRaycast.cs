@@ -9,24 +9,29 @@ public class ShootRaycast : MonoBehaviour
     [SerializeField]
     private Transform pin;
     public RaycastHit hit;
+    private Ray ray;
+
+    private
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ray = new Ray(pin.position, pin.forward);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.DrawRay(pin.position, pin.forward * distance, Color.blue, 0.3f);
             if (Physics.Raycast(pin.position, pin.forward, out hit, distance))
             {
                 if (hit.transform.CompareTag("Finish"))
                 {
-                    transform.rotation = hit.transform.rotation;
+                    Vector3 dir = hit.point - transform.position;
+
+                    transform.LookAt(transform.position - hit.normal);
                     transform.position = hit.point - (transform.forward * 0.25f);
                     transform.parent = hit.transform;
                 }
