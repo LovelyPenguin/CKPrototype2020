@@ -26,7 +26,8 @@ public class ShootRaycast : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Finish"))
                 {
-                    transform.position = hit.point;
+                    transform.rotation = hit.transform.rotation;
+                    transform.position = hit.point - (transform.forward * 0.25f);
                     transform.parent = hit.transform;
                 }
             }
