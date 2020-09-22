@@ -29,11 +29,14 @@ public class ShootRaycast : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Finish"))
                 {
+                    Debug.Log(hit.point);
                     Vector3 dir = hit.point - transform.position;
 
+                    transform.position = hit.point;
                     transform.LookAt(transform.position - hit.normal);
-                    transform.position = hit.point - (transform.forward * 0.25f);
+                    transform.position -= transform.forward * 0.3f;
                     transform.parent = hit.transform;
+                    //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, hit.transform.rotation.z);
                 }
             }
         }
