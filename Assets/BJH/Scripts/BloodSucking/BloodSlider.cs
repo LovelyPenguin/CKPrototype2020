@@ -93,6 +93,7 @@ public class BloodSlider : MonoBehaviour
             state = STATE.FAILED;
         }
 
+        BloodSuckingManager.instance.QuitSucking();
         Debug.Log(state);
     }
 }

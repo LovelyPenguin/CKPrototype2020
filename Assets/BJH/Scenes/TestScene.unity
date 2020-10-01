@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 336710526}
   - component: {fileID: 336710525}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BloodSuckUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1262,13 +1262,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710635165}
-  m_LocalRotation: {x: 0, y: 0, z: 0.07818936, w: 0.9969386}
-  m_LocalPosition: {x: 0, y: 1.7, z: -6.433}
+  m_LocalRotation: {x: -0, y: -0, z: 0.14853756, w: 0.9889068}
+  m_LocalPosition: {x: 0.15, y: 1.21, z: -6.433}
   m_LocalScale: {x: 10, y: 3, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.969001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.084002}
 --- !u!54 &710635170
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2375,6 +2375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d12de3db1d49a4cbe6b2353ce548c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSuckUI: {fileID: 336710523}
   bsSlider: {fileID: 1975561753}
   playerMove: {fileID: 963194229}
 --- !u!4 &1771858578

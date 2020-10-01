@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class BloodSuckingManager : MonoBehaviour
 {
+    [SerializeField] GameObject bloodSuckUI;
     [SerializeField] BloodSlider bsSlider;
     [SerializeField] PlayerMovement playerMove;
 
-    private void Start()
-    {
+    public static BloodSuckingManager instance;
 
+    [HideInInspector] public bool isSucking;
+
+    private void Awake()
+    {
+        if (!instance) instance = this;
     }
 
     public void SuckBtn()
@@ -26,17 +31,53 @@ public class BloodSuckingManager : MonoBehaviour
 
     private void Update()
     {
-        CheckLandingOnSkin();   
+        GetInput();
     }
 
-    void CheckLandingOnSkin()
+    bool CheckLandingOnSkin()
     {
-        if (playerMove.state != PlayerMovement.PLAYERSTATE.LANDED) return;
+        if (playerMove.state != PlayerMovement.PLAYERSTATE.LANDED)
+            return false;
 
         //착지한 오브젝트가 피부일경우
         if (playerMove.landing.landingTransform.CompareTag("Skin"))
         {
-            Debug.Log("Landed on Skin");
+            return true;
         }
+
+        return false;
+    }
+
+    void GetInput()
+    {
+        if (playerMove.state == PlayerMovement.PLAYERSTATE.FLYING)
+        {
+            QuitSucking();
+        }
+
+        if(Input.GetMouseButton(0))
+        {
+            if(CheckLandingOnSkin())
+            {
+                StartSucking();
+            }
+        }
+    }
+
+    public void StartSucking()
+    {
+        if (isSucking) return;
+
+        bloodSuckUI.SetActive(true);
+        isSucking = true;
+
+        int ran = Random.Range(30, 90);
+
+        bsSlider.StartSucking(ran);
+    }
+    public void QuitSucking()
+    {
+        isSucking = false;
+        bloodSuckUI.SetActive(false);
     }
 }

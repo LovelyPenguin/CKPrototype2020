@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     KeyBindings keys;
 
+    bool isRotating = true;
+
     public enum PLAYERSTATE
     {
         NONE,
@@ -115,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckIsRotating();
+
         //Check if landed
         if (landing.isLanded && state == PLAYERSTATE.FLYING) state = PLAYERSTATE.LANDING;
 
@@ -137,6 +141,13 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void CheckIsRotating()
+    {
+        isRotating = true;
+        if (BloodSuckingManager.instance.isSucking) isRotating = false;
+    }
+
+
     void LandingMovement()
     {
         Vector3 rot = landing.landingNormal;
@@ -144,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
 
         targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
         targetTransform.position = landing.landingPos;
-        targetTransform.rotation = Quaternion.LookRotation(-targetTransform.up);
+        targetTransform.Rotate(new Vector3(90,0,0));
 
         targetPos = targetTransform.position;
         currentPos = targetPos;
@@ -197,6 +208,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CamRotation()
     {
+        if (!isRotating) return;
         //Cam Rotation
         if (currentCamRotInput.sqrMagnitude > 0f)
         {
