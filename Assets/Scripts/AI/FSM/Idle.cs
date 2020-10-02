@@ -22,10 +22,6 @@ public class Idle : StateMachineBehaviour
         {
             animator.SetBool("isSight", true);
         }
-        else
-        {
-            animator.SetBool("isSight", false);
-        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

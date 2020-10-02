@@ -2378,6 +2378,7 @@ MonoBehaviour:
   bloodSuckUI: {fileID: 336710523}
   bsSlider: {fileID: 1975561753}
   playerMove: {fileID: 963194229}
+  isSucking: 0
 --- !u!4 &1771858578
 Transform:
   m_ObjectHideFlags: 0

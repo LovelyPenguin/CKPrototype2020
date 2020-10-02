@@ -46,6 +46,7 @@ public class AIMaster : MonoBehaviour
     {
         myAgent = GetComponent<NavMeshAgent>();
         animator.SetFloat("angryGauge", angryGauge);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         particle.Stop();
     }
 
@@ -54,6 +55,8 @@ public class AIMaster : MonoBehaviour
     {
         debugAngle = CalculateAngle(player.position);
         debugDistance = GetPlayerDistance();
+
+        animator.SetFloat("angryGauge", angryGauge);
     }
 
     private float CalculateAngle(Vector3 target)
@@ -153,6 +156,7 @@ public class AIMaster : MonoBehaviour
                 if (!myAgent.hasPath || myAgent.velocity.sqrMagnitude == 0f)
                 {
                     Debug.Log("Light Off");
+                    animator.SetTrigger("ArriveSwitch");
                     transform.rotation = LookRotationTarget(player.position, 5f);
                     timer += Time.deltaTime;
 
@@ -213,5 +217,17 @@ public class AIMaster : MonoBehaviour
         return Quaternion.Lerp(
             transform.rotation,
             Quaternion.LookRotation(new Vector3(targetPos.x, 0, targetPos.z)), Time.deltaTime * rotationSpeed);
+    }
+
+    public void ZeroIdle()
+    {
+        if (angryGauge < 50)
+        {
+            particle.Play();
+        }
+        else
+        {
+            particle.Stop();
+        }
     }
 }

@@ -15,12 +15,14 @@ public class Seek : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        enemy.Seek();
         if (enemy.GetPlayerAngle() <= enemy.attackAngle / 2 &&
             enemy.GetPlayerDistance() <= enemy.attackDistance)
         {
-            enemy.Attack();
+            animator.SetBool("isAttack", true);
         }
-        else if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
+
+        if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
             enemy.GetPlayerDistance() <= enemy.seekDistance)
         {
             enemy.Seek();
@@ -34,7 +36,7 @@ public class Seek : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy.SetAttack(false);
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
