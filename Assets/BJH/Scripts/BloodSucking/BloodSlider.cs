@@ -7,7 +7,7 @@ public class BloodSlider : MonoBehaviour
 {
     //Inspector
     [SerializeField] float speed;
-    public STATE state = STATE.NONE;
+    public SuckResult suckResult;
 
     [Tooltip("차례대로 EXCELLENT, GOOD, BAD의 범위 지정\n타이밍 지점 기준 양 쪽으로 같은 값이 적용됩니다.")]
     [SerializeField] float[] stateRate;
@@ -42,7 +42,7 @@ public class BloodSlider : MonoBehaviour
         this.timingRate = timingRate;
         Vector2 pos = new Vector2(minPos.x + (maxPos.x - minPos.x)*timingRate/100, minPos.y);
         timingTarget.position = pos;
-        state = STATE.NONE;
+        suckResult.state = STATE.NONE;
 
         StartCoroutine(SuckingCo());
     }
@@ -59,13 +59,13 @@ public class BloodSlider : MonoBehaviour
 
     IEnumerator SuckingCo()
     {
-        while(state == STATE.NONE)
+        while(suckResult.state == STATE.NONE)
         {
             slider.value += speed * Time.deltaTime;
 
             if(slider.value == slider.maxValue)
             {
-                state = STATE.FAILED;
+                suckResult.state = STATE.FAILED;
                 yield break;
             }
             yield return null;
@@ -78,22 +78,28 @@ public class BloodSlider : MonoBehaviour
 
         if (result < stateRate[0])
         {
-            state = STATE.EXCELLENT;
+            suckResult.state = STATE.EXCELLENT;
         }
         else if (result < stateRate[1])
         {
-            state = STATE.GOOD;
+            suckResult.state = STATE.GOOD;
         }
         else if (result < stateRate[2])
         {
-            state = STATE.BAD;
+            suckResult.state = STATE.BAD;
         }
         else
         {
-            state = STATE.FAILED;
+            suckResult.state = STATE.FAILED;
         }
 
         BloodSuckingManager.instance.QuitSucking();
-        Debug.Log(state);
+        Debug.Log(suckResult.state);
     }
+}
+
+public class SuckResult
+{
+    public BloodSlider.STATE state;
+    public int bodyPartCode;
 }

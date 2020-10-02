@@ -14,12 +14,13 @@ public class SubMission : ScriptableObject
     }
 
     //Inspector
-    public Kind missionKind;
-    public float targetArg;
+    public Kind missionType;
+    public float targetValue;
+    public int bodyPartCode;
     //Inspector
 
     [HideInInspector]
-    public float argf;
+    public float currentValue;
     [HideInInspector]
     public bool isCompleted = false;
     [HideInInspector]
