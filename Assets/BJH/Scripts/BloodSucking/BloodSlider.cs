@@ -9,7 +9,8 @@ public class BloodSlider : MonoBehaviour
     [SerializeField] float speed;
     public SuckResult suckResult;
 
-    [Tooltip("차례대로 EXCELLENT, GOOD, BAD의 범위 지정\n타이밍 지점 기준 양 쪽으로 같은 값이 적용됩니다.")]
+    [Tooltip("차례대로 EXCELLENT, GOOD, BAD의 범위 지정\n" +
+        "타이밍 지점 기준 양 쪽으로 같은 값이 적용됩니다.")]
     [SerializeField] float[] stateRate;
 
     [Header("")]
@@ -34,7 +35,7 @@ public class BloodSlider : MonoBehaviour
     }
 
 
-    public void StartSucking(float timingRate)
+    public void StartSucking(float timingRate, float speed = 50)
     {
         Debug.Log($"목표 : {timingRate}%");
 
@@ -42,6 +43,8 @@ public class BloodSlider : MonoBehaviour
         this.timingRate = timingRate;
         Vector2 pos = new Vector2(minPos.x + (maxPos.x - minPos.x)*timingRate/100, minPos.y);
         timingTarget.position = pos;
+
+        suckResult = new SuckResult();
         suckResult.state = STATE.NONE;
 
         StartCoroutine(SuckingCo());
@@ -55,6 +58,14 @@ public class BloodSlider : MonoBehaviour
         maxPos = handle.position;
         slider.value = 0;
         minPos = handle.position;
+    }
+
+    void Update()
+    {
+        if(Input.GetMouseButtonUp(0))
+        {
+            SuckNow();
+        }
     }
 
     IEnumerator SuckingCo()
@@ -72,7 +83,7 @@ public class BloodSlider : MonoBehaviour
         }
     }
 
-    public void PressBtn()
+    public void SuckNow()
     {
         float result = Mathf.Abs(slider.value - timingRate);
 
@@ -94,6 +105,17 @@ public class BloodSlider : MonoBehaviour
         }
 
         BloodSuckingManager.instance.QuitSucking();
+
+        //흡혈 성공시
+        if(suckResult.state != STATE.FAILED)
+        {
+            AIMaster ai = FindObjectOfType<AIMaster>();
+            if(ai)
+                ai.IncreaseAngryGauge(
+                BloodSuckingManager.instance.GetSuckRangeRate(suckResult.state));
+            SubMissionManager.instance.OnSuck(suckResult);
+        }
+
         Debug.Log(suckResult.state);
     }
 }

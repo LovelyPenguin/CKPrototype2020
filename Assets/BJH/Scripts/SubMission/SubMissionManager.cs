@@ -18,6 +18,22 @@ public class SubMissionManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        InitializeMissions();
+    }
+    void InitializeMissions()
+    {
+        SubMission mission;
+        for(int i = 0; i < missions.Count; i++)
+        {
+            mission = missions[i];
+            mission = Instantiate(mission);
+        }
+    }
+        
+
+
     public void OnSuck(SuckResult result)
     {
         SubMission mis;
@@ -26,11 +42,11 @@ public class SubMissionManager : MonoBehaviour
             mis = missions[i];
             switch (mis.missionType)
             {
-                case SubMission.Kind.SuckTimes:
+                case SubMission.MissionType.SuckTimes:
                     mis.currentValue += 1;
                     CheckSuckTimes(mis);
                     break;
-                case SubMission.Kind.SuckPart:
+                case SubMission.MissionType.SuckPart:
                     if(mis.bodyPartCode == result.bodyPartCode)
                     {
                         mis.currentValue += 1;
@@ -43,9 +59,23 @@ public class SubMissionManager : MonoBehaviour
             
         }
     }
+    public void OnFailedSuck()
+    {
+        SubMission mis;
+        for (int i = 0; i < missions.Count; i++)
+        {
+            mis = missions[i];
+
+            if(mis.missionType == SubMission.MissionType.NoFailSuck)
+            {
+                mis.isCompleted = false;
+                mis.isFinished = true;
+            }
+        }
+    }
 
     #region Methods:CheckMissions
-    void CheckMissions()
+    void CheckAllMissions()
     {
         SubMission mission;
         for (int i = 0; i < missions.Count; i++)
@@ -56,22 +86,23 @@ public class SubMissionManager : MonoBehaviour
 
             switch (mission.missionType)
             {
-                case SubMission.Kind.MakeNoiseSec:
+                case SubMission.MissionType.MakeNoiseSec:
                     {
                         CheckMakeNoiseSec(mission);
                     }
                     break;
-                case SubMission.Kind.SuckTimes:
+                case SubMission.MissionType.SuckTimes:
                     {
                         CheckSuckTimes(mission);
                     }
                     break;
-                case SubMission.Kind.SuckPart:
+                case SubMission.MissionType.SuckPart:
                     {
                         CheckSuckPart(mission);
                     }
                     break;
 
+                //잘못된 미션 삭제
                 default:
                     {
                         missions.Remove(mission);

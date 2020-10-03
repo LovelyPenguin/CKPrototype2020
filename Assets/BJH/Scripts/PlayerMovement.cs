@@ -79,7 +79,16 @@ public class PlayerMovement : MonoBehaviour
         anim = targetTransform.GetComponentInChildren<Animator>();
 
         SetAnimState(PLAYERSTATE.FLYING);
+
+        //StartCoroutine(dieTest());
     }
+
+    IEnumerator dieTest()
+    {
+        yield return null;
+        Die();
+    }
+
     void Update()
     {
         //CheckIsRotating();
@@ -105,8 +114,12 @@ public class PlayerMovement : MonoBehaviour
             case PLAYERSTATE.FLYING:
                 FlyingMovement();
                 break;
+            case PLAYERSTATE.DEAD:
+                DeadMovement();
+                break;
         }
-        camRootTransform.position = targetTransform.position;
+        if (state != PLAYERSTATE.DEAD) 
+            camRootTransform.position = targetTransform.position;
 
     }
 
@@ -159,7 +172,9 @@ public class PlayerMovement : MonoBehaviour
         //게임 결과 출력
 
         //중력받아 떨어지게
-        targetTransform.GetComponent<Rigidbody>().useGravity = true;
+        Rigidbody rig = targetTransform.GetComponent<Rigidbody>();
+        rig.useGravity = true;
+        rig.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void CheckIsRotating()
@@ -248,6 +263,11 @@ public class PlayerMovement : MonoBehaviour
         CamRotation();
 
         TargetRotation();
+    }
+
+    void DeadMovement()
+    {
+        cameraTransform.LookAt(targetTransform);
     }
     #endregion
 

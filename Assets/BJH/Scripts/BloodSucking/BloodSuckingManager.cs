@@ -9,7 +9,15 @@ public class BloodSuckingManager : MonoBehaviour
     [SerializeField] BloodSlider bsSlider;
     [SerializeField] PlayerMovement playerMove;
 
+    [Header("")]
+    [SerializeField] float minRange;
+    [SerializeField] float maxRange;
+
+    [Header("")]
+    public float[] suckRageRate;
+
     public static BloodSuckingManager instance;
+
 
     [HideInInspector] public bool isSucking;
 
@@ -20,11 +28,11 @@ public class BloodSuckingManager : MonoBehaviour
 
     public void SuckBtn()
     {
-        bsSlider.PressBtn();
+        bsSlider.SuckNow();
     }
     public void StartSuckingBtn()
     {
-        int ran = Random.Range(30, 90);
+        int ran = Random.Range((int)minRange, (int)maxRange);
 
         bsSlider.StartSucking(ran);
     }
@@ -72,7 +80,7 @@ public class BloodSuckingManager : MonoBehaviour
         isSucking = true;
         playerMove.SetAnimState(PlayerMovement.PLAYERSTATE.SUCK);
 
-        int ran = Random.Range(30, 90);
+        int ran = Random.Range((int)minRange, (int)maxRange);
 
         bsSlider.StartSucking(ran);
     }
@@ -82,5 +90,13 @@ public class BloodSuckingManager : MonoBehaviour
         isSucking = false;
         playerMove.SetAnimState(PlayerMovement.PLAYERSTATE.LANDED);
         bloodSuckUI.SetActive(false);
+    }
+
+    public float GetSuckRangeRate(BloodSlider.STATE state)
+    {
+        //None이 0.
+        //1 깎아야함
+        int a = (int)state - 1;
+        return suckRageRate[a];
     }
 }
