@@ -70,6 +70,7 @@ public class BloodSuckingManager : MonoBehaviour
 
         bloodSuckUI.SetActive(true);
         isSucking = true;
+        playerMove.SetAnimState(PlayerMovement.PLAYERSTATE.SUCK);
 
         int ran = Random.Range(30, 90);
 
@@ -77,7 +78,9 @@ public class BloodSuckingManager : MonoBehaviour
     }
     public void QuitSucking()
     {
+        if (!isSucking) return;
         isSucking = false;
+        playerMove.SetAnimState(PlayerMovement.PLAYERSTATE.LANDED);
         bloodSuckUI.SetActive(false);
     }
 }

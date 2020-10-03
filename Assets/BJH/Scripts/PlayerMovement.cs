@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 100)]
     public float movementSpeed = 5f;
 
-    [Range(1, 20)]
+    [Range(0, 20)]
     public float cameraDistance = 10f;
 
 
@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float targetRotSmoothTime = 0.2f;
     // Inspector Field
 
+    Animator anim;
     KeyBindings keys;
 
     bool isRotating = true;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         FLYING,
         LANDING,
         LANDED,
+        SUCK,
         CANNOTMOVE,
         DEAD
     }
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentTargetRot;
     Vector3 currentTargetRotVelocity;
 
-
+    bool isLandingStarted = false;
 
     private void Awake()
     {
@@ -87,6 +89,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         keys = KeybindingManager.instance.keyBindings;
+        anim = targetTransform.GetComponentInChildren<Animator>();
+
+        SetAnimState(PLAYERSTATE.FLYING);
     }
 
     public void SetMovementInput(Vector3 value)
@@ -105,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
-            state = PLAYERSTATE.FLYING;
+            SetAnimState(PLAYERSTATE.FLYING);
             verticalInput = 1;
         }
         else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
@@ -117,10 +122,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckIsRotating();
+        //CheckIsRotating();
 
         //Check if landed
-        if (landing.isLanded && state == PLAYERSTATE.FLYING) state = PLAYERSTATE.LANDING;
+        if (landing.isLanded && state == PLAYERSTATE.FLYING)
+        {
+            Debug.Log("Flying->Landing");
+            SetAnimState(PLAYERSTATE.LANDING);
+        }
 
         GetInput();
 
@@ -147,21 +156,59 @@ public class PlayerMovement : MonoBehaviour
         if (BloodSuckingManager.instance.isSucking) isRotating = false;
     }
 
+    public void SetAnimState(PLAYERSTATE state)
+    {
+        this.state = state;
 
+        switch(state)
+        {
+            case PLAYERSTATE.DEAD:
+                anim.SetTrigger("Dead");
+                break;
+            case PLAYERSTATE.FLYING:
+                anim.SetTrigger("Idle");
+                break;
+            case PLAYERSTATE.SUCK:
+                anim.SetTrigger("Suck");
+                break;
+            case PLAYERSTATE.LANDED:
+                anim.SetTrigger("Down");
+                break;
+        }
+    }
+
+    #region Methods:State
     void LandingMovement()
     {
-        Vector3 rot = landing.landingNormal;
+        if(!isLandingStarted)
+        {
+            Vector3 rot = landing.landingNormal;
 
 
-        targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
-        targetTransform.position = landing.landingPos;
-        targetTransform.Rotate(new Vector3(90,0,0));
-
-        targetPos = targetTransform.position;
-        currentPos = targetPos;
+            targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
+            targetTransform.Rotate(new Vector3(90, 0, 0));
 
 
-        state = PLAYERSTATE.LANDED;
+            targetPos = landing.landingPos;
+        }
+
+        //movement
+        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
+
+        targetTransform.position = currentPos;
+
+
+        CamRotation();
+
+        if (Vector3.SqrMagnitude(targetTransform.position - targetPos) < 0.001)
+        {
+            SetAnimState(PLAYERSTATE.LANDED);
+            Debug.Log("Landing -> landed");
+
+            targetPos = targetTransform.position;
+            currentPos = targetPos;
+
+        }
     }
     void LandedMovement()
     {
@@ -172,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
             Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
-            state = PLAYERSTATE.FLYING;
+            SetAnimState(PLAYERSTATE.FLYING);
             FlyingMovement();
         }
 
@@ -188,7 +235,9 @@ public class PlayerMovement : MonoBehaviour
 
         TargetRotation();
     }
+    #endregion
 
+    #region Methods:Movement
     void Movement()
     {
         //Movement
@@ -208,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CamRotation()
     {
-        if (!isRotating) return;
+        //if (!isRotating) return;
         //Cam Rotation
         if (currentCamRotInput.sqrMagnitude > 0f)
         {
@@ -241,4 +290,5 @@ public class PlayerMovement : MonoBehaviour
             targetTransform.rotation = Quaternion.Euler(currentTargetRot);
         }
     }
+    #endregion
 }

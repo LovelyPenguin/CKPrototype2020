@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestMis
   m_EditorClassIdentifier: 
   missionKind: 0
-  targetArg: 0
+  targetArg: 3
   argf: 0
   isCompleted: 0
   isFinished: 0

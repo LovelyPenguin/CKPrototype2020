@@ -15,9 +15,36 @@ public class SubMissionManager : MonoBehaviour
 
     private void Update()
     {
-        CheckMissions();
+
     }
 
+    public void OnSuck(SuckResult result)
+    {
+        SubMission mis;
+        for(int i = 0; i < missions.Count; i++)
+        {
+            mis = missions[i];
+            switch (mis.missionType)
+            {
+                case SubMission.Kind.SuckTimes:
+                    mis.currentValue += 1;
+                    CheckSuckTimes(mis);
+                    break;
+                case SubMission.Kind.SuckPart:
+                    if(mis.bodyPartCode == result.bodyPartCode)
+                    {
+                        mis.currentValue += 1;
+                        CheckSuckPart(mis);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
+
+    #region Methods:CheckMissions
     void CheckMissions()
     {
         SubMission mission;
@@ -27,7 +54,7 @@ public class SubMissionManager : MonoBehaviour
 
             if (mission.isFinished) continue;
 
-            switch (mission.missionKind)
+            switch (mission.missionType)
             {
                 case SubMission.Kind.MakeNoiseSec:
                     {
@@ -58,8 +85,8 @@ public class SubMissionManager : MonoBehaviour
     void CheckMakeNoiseSec(SubMission mission)
     {
         //if(isMakingNose)
-        mission.argf += Time.deltaTime;
-        if (mission.targetArg <= mission.argf)
+        mission.currentValue += Time.deltaTime;
+        if (mission.targetValue <= mission.currentValue)
         {
             mission.isCompleted = true;
             mission.isFinished = true;
@@ -68,9 +95,9 @@ public class SubMissionManager : MonoBehaviour
     void CheckSuckTimes(SubMission mission)
     {
         //if(Suck())
-        mission.argf += 1;
+        mission.currentValue += 1;
 
-        if(mission.targetArg <= mission.argf)
+        if(mission.targetValue <= mission.currentValue)
         {
             mission.isCompleted = true;
             mission.isFinished = true;
@@ -84,4 +111,5 @@ public class SubMissionManager : MonoBehaviour
         //    mission.isFinished = true;
         //}
     }
+    #endregion
 }
