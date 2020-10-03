@@ -319,13 +319,21 @@ public class PlayerMovement : MonoBehaviour
         currentCamRot = Vector3.SmoothDamp(currentCamRot, targetCamRot, ref currentCamRotVelocity, camRotSmoothTime);
         camRootTransform.rotation = Quaternion.Euler(currentCamRot);
 
+        AvoidCamPenetration();
+    }
+
+    void AvoidCamPenetration()
+    {
         //Avoid cam penetration
         RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
+
+        RaycastHit hit;
         if (hits.Length > 0)
         {
-            for(int i = 0; i < hits.Length; i++)
+            for (int i = 0; i < hits.Length; i++)
             {
-                if (hits[i].transform != targetTransform)
+                hit = hits[i];
+                if (hit.transform != targetTransform && hit.transform != landing.landedTransform)
                 {
                     cameraTransform.position = hits[i].point + camRootTransform.forward * 0.1f;
                     break;
