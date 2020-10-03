@@ -66,26 +66,13 @@ public class PlayerMovement : MonoBehaviour
 
     bool isLandingStarted = false;
 
+    #region UnityCallbacks
     private void Awake()
     {
         //Cursor.visible = false;
 
         InitValue();
     }
-
-    void InitValue()
-    {
-        targetPos = targetTransform.position;
-        currentPos = targetPos;
-
-        targetCamRot = targetTransform.eulerAngles;
-        currentCamRot = targetCamRot;
-
-        targetTargetRot = targetTransform.eulerAngles;
-        currentTargetRot = targetTargetRot;
-
-    }
-
     private void Start()
     {
         keys = KeybindingManager.instance.keyBindings;
@@ -93,33 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
         SetAnimState(PLAYERSTATE.FLYING);
     }
-
-    public void SetMovementInput(Vector3 value)
-    {
-        currentMoveInput = value;
-    }
-
-    public void SetRotationInput(Vector2 value)
-    {
-        currentCamRotInput = value;
-    }
-
-    void GetInput()
-    {
-        if (KeybindingManager.instance.IsGettingInput()) return;
-        if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
-        {
-            landing.isLanded = false;
-            SetAnimState(PLAYERSTATE.FLYING);
-            verticalInput = 1;
-        }
-        else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
-        else verticalInput = 0;
-
-        SetMovementInput(new Vector3(keys.GetAxisRaw("Horizontal"), keys.GetAxisRaw("Vertical"), verticalInput));
-        SetRotationInput(new Vector2(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X")));
-    }
-    // Update is called once per frame
     void Update()
     {
         //CheckIsRotating();
@@ -150,17 +110,73 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+
+    #endregion
+
+    void InitValue()
+    {
+        targetPos = targetTransform.position;
+        currentPos = targetPos;
+
+        targetCamRot = targetTransform.eulerAngles;
+        currentCamRot = targetCamRot;
+
+        targetTargetRot = targetTransform.eulerAngles;
+        currentTargetRot = targetTargetRot;
+
+    }
+
+    public void SetMovementInput(Vector3 value)
+    {
+        currentMoveInput = value;
+    }
+
+    public void SetRotationInput(Vector2 value)
+    {
+        currentCamRotInput = value;
+    }
+
+    void GetInput()
+    {
+        if (KeybindingManager.instance.IsGettingInput()) return;
+        if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
+        {
+            landing.isLanded = false;
+            SetAnimState(PLAYERSTATE.FLYING);
+            verticalInput = 1;
+        }
+        else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
+        else verticalInput = 0;
+
+        SetMovementInput(new Vector3(keys.GetAxisRaw("Horizontal"), keys.GetAxisRaw("Vertical"), verticalInput));
+        SetRotationInput(new Vector2(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X")));
+    }
+    // Update is called once per frame
+
+    public void Die()
+    {
+        SetAnimState(PLAYERSTATE.DEAD);
+        //게임 결과 출력
+
+        //중력받아 떨어지게
+        targetTransform.GetComponent<Rigidbody>().useGravity = true;
+    }
+
     void CheckIsRotating()
     {
         isRotating = true;
         if (BloodSuckingManager.instance.isSucking) isRotating = false;
     }
 
+
+    #region Methods:State
+
     public void SetAnimState(PLAYERSTATE state)
     {
         this.state = state;
 
-        switch(state)
+        anim.SetBool("Down", false);
+        switch (state)
         {
             case PLAYERSTATE.DEAD:
                 anim.SetTrigger("Dead");
@@ -172,12 +188,10 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("Suck");
                 break;
             case PLAYERSTATE.LANDED:
-                anim.SetTrigger("Down");
+                anim.SetBool("Down", true);
                 break;
         }
     }
-
-    #region Methods:State
     void LandingMovement()
     {
         if(!isLandingStarted)

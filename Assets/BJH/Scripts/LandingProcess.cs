@@ -8,7 +8,7 @@ public class LandingProcess : MonoBehaviour
 
     public LayerMask colliderLayer;
 
-    public Transform landingTransform;
+    [HideInInspector] public Transform landedTransform;
     public Vector3 landingNormal;
     public Vector3 landingPos;
 
@@ -23,7 +23,7 @@ public class LandingProcess : MonoBehaviour
         if ((mask & colliderLayer.value) != 0)
         {
             isLanded = true;
-            landingTransform = collision.transform;
+            landedTransform = collision.transform;
             landingNormal = (collision.contacts[0].normal);
             landingPos = collision.contacts[0].point + landingNormal * 0.02f; 
         }

@@ -40,7 +40,7 @@ public class BloodSuckingManager : MonoBehaviour
             return false;
 
         //착지한 오브젝트가 피부일경우
-        if (playerMove.landing.landingTransform.CompareTag("Skin"))
+        if (playerMove.landing.landedTransform.CompareTag("Skin"))
         {
             return true;
         }
