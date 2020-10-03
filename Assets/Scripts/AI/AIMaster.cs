@@ -15,6 +15,7 @@ public class AIMaster : MonoBehaviour
     public ParticleSystem particle;
     public Animator animator;
     public Vector3 lightSwitchLocation;
+    public GameObject flashBang;
 
     [Header("Move Setting")]
     public float randomMoveInterval = 0;
@@ -160,9 +161,10 @@ public class AIMaster : MonoBehaviour
                     transform.rotation = LookRotationTarget(player.position, 5f);
                     timer += Time.deltaTime;
 
-                    if (timer >= 5f)
+                    if (timer >= 5f && !animator.GetBool("isCompleteLightPhase"))
                     {
                         Debug.Log("Light On!");
+                        flashBang.SetActive(true);
                         return true;
                     }
                     else
@@ -229,5 +231,12 @@ public class AIMaster : MonoBehaviour
         {
             particle.Stop();
         }
+    }
+
+    public void AIDied()
+    {
+        myAgent.speed = 0;
+        myAgent.angularSpeed = 0;
+        particle.gameObject.SetActive(false);
     }
 }
