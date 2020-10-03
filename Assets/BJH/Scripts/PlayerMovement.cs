@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         SetAnimState(PLAYERSTATE.FLYING);
 
         //StartCoroutine(dieTest());
-        PopUpManager.instance.FlowText("Dead", 1f);
+        //PopUpManager.instance.FlowText("Dead", 1f);
     }
 
     IEnumerator dieTest()
@@ -222,24 +222,22 @@ public class PlayerMovement : MonoBehaviour
         targetTransform.Rotate(new Vector3(90, 0, 0));
 
 
-
-        targetTransform.position = currentPos;
+        targetTransform.position = landing.landingPos;
 
 
         CamRotation();
 
-        if (Vector3.SqrMagnitude(targetTransform.position - targetPos) < 0.001)
-        {
-            SetAnimState(PLAYERSTATE.LANDED);
-            Debug.Log("Landing -> landed");
+        targetTransform.SetParent(landing.landedTransform);
+        SetAnimState(PLAYERSTATE.LANDED);
 
-            targetPos = targetTransform.position;
-            currentPos = targetPos;
 
-        }
+        targetPos = targetTransform.position;
+        currentPos = targetPos;
+
     }
     void LandedMovement()
     {
+        //Landed->Flying
         if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveForward)) ||
             Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveBackward)) ||
             Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveLeft)) ||
@@ -248,6 +246,9 @@ public class PlayerMovement : MonoBehaviour
         {
             landing.isLanded = false;
             SetAnimState(PLAYERSTATE.FLYING);
+
+            targetPos = targetTransform.position;
+            currentPos = targetPos;
             FlyingMovement();
         }
 
@@ -262,6 +263,12 @@ public class PlayerMovement : MonoBehaviour
         CamRotation();
 
         TargetRotation();
+
+        if(targetTransform.parent)
+        {
+            targetTransform.SetParent(null);
+            targetTransform.localScale = Vector3.one;
+        }
     }
 
     void DeadMovement()
@@ -276,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
             rig.constraints = RigidbodyConstraints.FreezeAll;
 
             targetTransform.position = landing.landingPos;
+
         }
     }
     #endregion

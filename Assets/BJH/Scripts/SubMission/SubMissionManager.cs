@@ -29,6 +29,13 @@ public class SubMissionManager : MonoBehaviour
         {
             mission = missions[i];
             mission = Instantiate(mission);
+
+            switch(mission.missionType)
+            {
+                case SubMission.MissionType.NoFailSuck:
+                    mission.isCompleted = true;
+                    break;
+            }
         }
     }
         
@@ -72,6 +79,15 @@ public class SubMissionManager : MonoBehaviour
                 mis.isFinished = true;
             }
         }
+    }
+
+    /// <summary>
+    /// 서브 퀘스트 클리어 현황을 받아옵니다.
+    /// </summary>
+    public List<SubMission> GetResult()
+    {
+        CheckAllMissions();
+        return missions;
     }
 
     #region Methods:CheckMissions
