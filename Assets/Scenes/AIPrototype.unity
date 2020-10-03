@@ -237,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 111606245}
   m_LocalRotation: {x: 0.018520921, y: 0.012728364, z: 0.6996428, w: 0.71413934}
   m_LocalPosition: {x: -0.09200043, y: -0.004599852, z: -0.00020017692}
-  m_LocalScale: {x: 0.049999997, y: 0.1, z: 0.049999997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6607722477086324301}
   m_RootOrder: 0
@@ -252,8 +252,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.03
+  m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &111606248
@@ -571,7 +571,7 @@ Transform:
   m_GameObject: {fileID: 264571704}
   m_LocalRotation: {x: -0.010756511, y: -0.015950218, z: 0.6995768, w: 0.71429855}
   m_LocalPosition: {x: -0.09200043, y: -0.004599852, z: -0.00020017692}
-  m_LocalScale: {x: 0.049999997, y: 0.1, z: 0.049999997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2863036284868368550}
   m_RootOrder: 0
@@ -586,8 +586,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 0.03
+  m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &264571707
@@ -8259,9 +8259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1445a63b20883674fac4bf2d670afc96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDied:
-    m_PersistentCalls:
-      m_Calls: []
   hitText: {fileID: 1984865243}
   ai: {fileID: 8296172669093699972}
   hitCount: 0
