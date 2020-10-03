@@ -35,4 +35,21 @@ public class GamePause : MonoBehaviour
             }
         }
     }
+
+    public void GameStopTouch()
+    {
+        if (!isGameStop)
+        {
+            Time.timeScale = 0;
+            isGameStop = true;
+            return;
+        }
+
+        else
+        {
+            Time.timeScale = 1;
+            isGameStop = false;
+            return;
+        }
+    }
 }

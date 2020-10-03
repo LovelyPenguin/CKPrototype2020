@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TempHitCount : MonoBehaviour
 {
     public Text hitText;
-    public Text angryText;
     public AIMaster ai;
 
     public int hitCount = 0;
@@ -19,7 +18,6 @@ public class TempHitCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        angryText.text = "Angry : " + ai.angryGauge.ToString();
     }
 
     private void OnParticleCollision(GameObject other)
