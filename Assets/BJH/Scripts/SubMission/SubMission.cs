@@ -17,7 +17,7 @@ public class SubMission : ScriptableObject
     //Inspector
     public MissionType missionType;
     public float targetValue;
-    public int bodyPartCode;
+    [HideInInspector]public int bodyPartCode;
     //Inspector
 
     [HideInInspector]

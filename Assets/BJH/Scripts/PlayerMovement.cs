@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentTargetRot;
     Vector3 currentTargetRotVelocity;
 
-    bool isLandingStarted = false;
 
     #region UnityCallbacks
     private void Awake()
@@ -80,7 +79,8 @@ public class PlayerMovement : MonoBehaviour
 
         SetAnimState(PLAYERSTATE.FLYING);
 
-        //StartCoroutine(dieTest());
+        StartCoroutine(dieTest());
+        PopUpManager.instance.FlowText("Dead", 1f);
     }
 
     IEnumerator dieTest()
@@ -114,13 +114,18 @@ public class PlayerMovement : MonoBehaviour
             case PLAYERSTATE.FLYING:
                 FlyingMovement();
                 break;
-            case PLAYERSTATE.DEAD:
-                DeadMovement();
-                break;
         }
         if (state != PLAYERSTATE.DEAD) 
             camRootTransform.position = targetTransform.position;
 
+    }
+
+    private void FixedUpdate()
+    {
+        if(state == PLAYERSTATE.DEAD)
+        {
+            DeadMovement();
+        }
     }
 
 
@@ -175,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody rig = targetTransform.GetComponent<Rigidbody>();
         rig.useGravity = true;
         rig.constraints = RigidbodyConstraints.FreezeRotation;
+        Time.timeScale = 0.3f;
     }
 
     void CheckIsRotating()
@@ -209,20 +215,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void LandingMovement()
     {
-        if(!isLandingStarted)
-        {
-            Vector3 rot = landing.landingNormal;
+        Vector3 rot = landing.landingNormal;
 
 
-            targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
-            targetTransform.Rotate(new Vector3(90, 0, 0));
+        targetTransform.rotation = Quaternion.LookRotation(rot, -targetTransform.forward);
+        targetTransform.Rotate(new Vector3(90, 0, 0));
 
 
-            targetPos = landing.landingPos;
-        }
-
-        //movement
-        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
 
         targetTransform.position = currentPos;
 
@@ -268,6 +267,16 @@ public class PlayerMovement : MonoBehaviour
     void DeadMovement()
     {
         cameraTransform.LookAt(targetTransform);
+
+        if(landing.isLanded)
+        {
+            //중력받아 떨어지게
+            Rigidbody rig = targetTransform.GetComponent<Rigidbody>();
+            rig.useGravity = false;
+            rig.constraints = RigidbodyConstraints.FreezeAll;
+
+            targetTransform.position = landing.landingPos;
+        }
     }
     #endregion
 
@@ -306,7 +315,14 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(camRootTransform.position, -camRootTransform.forward, cameraDistance);
         if (hits.Length > 0)
         {
-            cameraTransform.position = hits[0].point + camRootTransform.forward * 0.1f;
+            for(int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform != targetTransform)
+                {
+                    cameraTransform.position = hits[i].point + camRootTransform.forward * 0.1f;
+                    break;
+                }
+            }
         }
         else
         {
