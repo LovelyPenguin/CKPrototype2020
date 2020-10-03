@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TempHitCount : MonoBehaviour
@@ -18,6 +19,7 @@ public class TempHitCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     private void OnParticleCollision(GameObject other)
@@ -26,6 +28,10 @@ public class TempHitCount : MonoBehaviour
         {
             hitCount++;
             hitText.text = "Hit : " + hitCount;
+            if (hitCount >= 10)
+            {
+                GameSettings.instance.GetComponent<PlayerDead>().playerDead.Invoke();
+            }
         }
     }
 }

@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
         SetAnimState(PLAYERSTATE.FLYING);
 
-        StartCoroutine(dieTest());
+        //StartCoroutine(dieTest());
         PopUpManager.instance.FlowText("Dead", 1f);
     }
 
