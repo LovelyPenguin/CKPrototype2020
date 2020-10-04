@@ -117,6 +117,10 @@ public class BloodSlider : MonoBehaviour
                 BloodSuckingManager.instance.GetSuckRangeRate(suckResult.state));
             SubMissionManager.instance.OnSuck(suckResult);
         }
+        else
+        {
+            SubMissionManager.instance.OnFailedSuck();
+        }
         suckEvent.Invoke();
         Debug.Log(suckResult.state);
     }
