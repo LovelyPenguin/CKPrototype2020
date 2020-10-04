@@ -213,6 +213,12 @@ public class AIMaster : MonoBehaviour
         animator.SetFloat("angryGauge", angryGauge);
     }
 
+    public void AddAngryGauge(float value)
+    {
+        angryGauge += value;
+        animator.SetFloat("angryGauge", angryGauge);
+    }
+
     public Quaternion LookRotationTarget(Vector3 player, float rotationSpeed)
     {
         Vector3 targetPos = player - transform.position;

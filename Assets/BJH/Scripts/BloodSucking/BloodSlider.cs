@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BloodSlider : MonoBehaviour
@@ -8,6 +9,7 @@ public class BloodSlider : MonoBehaviour
     //Inspector
     [SerializeField] float speed;
     public SuckResult suckResult;
+    public UnityEvent suckEvent;
 
     [Tooltip("차례대로 EXCELLENT, GOOD, BAD의 범위 지정\n" +
         "타이밍 지점 기준 양 쪽으로 같은 값이 적용됩니다.")]
@@ -115,7 +117,7 @@ public class BloodSlider : MonoBehaviour
                 BloodSuckingManager.instance.GetSuckRangeRate(suckResult.state));
             SubMissionManager.instance.OnSuck(suckResult);
         }
-
+        suckEvent.Invoke();
         Debug.Log(suckResult.state);
     }
 }

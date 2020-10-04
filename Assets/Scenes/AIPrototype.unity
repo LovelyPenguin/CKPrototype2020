@@ -2859,6 +2859,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
+  suckEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8296172669093699972}
+        m_MethodName: AddAngryGauge
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 25
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   stateRate:
   - 3
   - 6
