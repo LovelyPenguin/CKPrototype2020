@@ -6,8 +6,17 @@ public class SubMissionManager : MonoBehaviour
 {
     public static SubMissionManager instance;
 
-    public List<SubMission> missions;
+    //Inspector
+    [SerializeField] List<SubMission> missions;
 
+    [SerializeField] Sprite clearedSpr;
+    [SerializeField] Sprite notClearedSpr;
+
+    public Sprite GetStarSprite(bool isCleared)
+    {
+        return isCleared ? clearedSpr : notClearedSpr;
+    }
+    //Inspector
     private void Awake()
     {
         if (!instance) instance = this;
@@ -30,12 +39,9 @@ public class SubMissionManager : MonoBehaviour
             mission = missions[i];
             mission = Instantiate(mission);
 
-            switch(mission.missionType)
-            {
-                case SubMission.MissionType.NoFailSuck:
-                    mission.isCompleted = true;
-                    break;
-            }
+            mission.Initialize();
+
+            missions[i] = mission;
         }
     }
         
@@ -84,6 +90,11 @@ public class SubMissionManager : MonoBehaviour
     /// <summary>
     /// 서브 퀘스트 클리어 현황을 받아옵니다.
     /// </summary>
+    
+    public List<SubMission> GetMissions()
+    {
+        return missions;
+    }
     public List<SubMission> GetResult()
     {
         CheckAllMissions();

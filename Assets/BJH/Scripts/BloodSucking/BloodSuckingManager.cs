@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BloodSuckingManager : MonoBehaviour
@@ -21,10 +22,22 @@ public class BloodSuckingManager : MonoBehaviour
 
     [HideInInspector] public bool isSucking;
 
+
+    #region UnityCallbacks
     private void Awake()
     {
         if (!instance) instance = this;
     }
+
+    private void Start()
+    {
+    }
+
+    private void Update()
+    {
+        GetInput();
+    }
+    #endregion
 
     public void SuckBtn()
     {
@@ -37,10 +50,6 @@ public class BloodSuckingManager : MonoBehaviour
         bsSlider.StartSucking(ran);
     }
 
-    private void Update()
-    {
-        GetInput();
-    }
 
     bool CheckLandingOnSkin()
     {
@@ -63,7 +72,7 @@ public class BloodSuckingManager : MonoBehaviour
             QuitSucking();
         }
 
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0) && !UIClickChecker.GetIsInteractingWithUI())
         {
             if(CheckLandingOnSkin())
             {
