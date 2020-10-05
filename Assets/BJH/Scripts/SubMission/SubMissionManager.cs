@@ -72,6 +72,22 @@ public class SubMissionManager : MonoBehaviour
             
         }
     }
+
+    public void OnMakeNoise()
+    {
+        SubMission mis;
+        for (int i = 0; i < missions.Count; i++)
+        {
+            mis = missions[i];
+
+            if (mis.missionType == SubMission.MissionType.MakeNoiseSec)
+            {
+                mis.currentValue += Time.deltaTime;
+                CheckMakeNoiseSec(mis);
+            }
+        }
+    }
+
     public void OnFailedSuck()
     {
         SubMission mis;
@@ -142,8 +158,6 @@ public class SubMissionManager : MonoBehaviour
 
     void CheckMakeNoiseSec(SubMission mission)
     {
-        //if(isMakingNose)
-        mission.currentValue += Time.deltaTime;
         if (mission.targetValue <= mission.currentValue)
         {
             mission.isCompleted = true;

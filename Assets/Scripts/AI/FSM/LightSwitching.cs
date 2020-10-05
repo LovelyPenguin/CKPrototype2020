@@ -10,7 +10,6 @@ public class LightSwitching : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy = animator.GetComponent<AIMaster>();
-        animator.SetBool("isCompleteLightPhase", enemy.LightOnOff());
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
