@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AIPrototype.unity
     guid: 8551f84ad90e161469f621690d6335b0
+  - enabled: 1
+    path: Assets/BJH/Scenes/TestScene.unity
+    guid: 848ee71c79d274b49ae1b6ae4049afeb
   m_configObjects: {}
