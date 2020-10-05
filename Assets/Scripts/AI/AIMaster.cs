@@ -147,7 +147,7 @@ public class AIMaster : MonoBehaviour
         StopCoroutine(RestOrder());
     }
 
-    public bool LightOnOff()
+    public void LightOnOff()
     {
         myAgent.SetDestination(lightSwitchLocation);
         if (!myAgent.pathPending)
@@ -159,33 +159,18 @@ public class AIMaster : MonoBehaviour
                     Debug.Log("Light Off");
                     animator.SetTrigger("ArriveSwitch");
                     transform.rotation = LookRotationTarget(player.position, 5f);
-                    timer += Time.deltaTime;
 
-                    if (timer >= 5f && !animator.GetBool("isCompleteLightPhase"))
-                    {
-                        Debug.Log("Light On!");
-                        flashBang.SetActive(true);
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
+                    StartCoroutine(SwitchOff());
                 }
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+    }
+
+    IEnumerator SwitchOff()
+    {
+        yield return new WaitForSeconds(5f);
+        flashBang.SetActive(true);
+        animator.SetBool("isCompleteLightPhase", true);
     }
 
     public float GetPlayerDistance()
