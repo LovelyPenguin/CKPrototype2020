@@ -147,6 +147,7 @@ public class AIMaster : MonoBehaviour
         StopCoroutine(RestOrder());
     }
 
+    bool context = false;
     public void LightOnOff()
     {
         myAgent.SetDestination(lightSwitchLocation);
@@ -160,7 +161,10 @@ public class AIMaster : MonoBehaviour
                     animator.SetTrigger("ArriveSwitch");
                     transform.rotation = LookRotationTarget(player.position, 5f);
 
-                    StartCoroutine(SwitchOff());
+                    if (!context)
+                    {
+                        StartCoroutine(SwitchOff());
+                    }
                 }
             }
         }
@@ -168,6 +172,7 @@ public class AIMaster : MonoBehaviour
 
     IEnumerator SwitchOff()
     {
+        context = true;
         yield return new WaitForSeconds(5f);
         flashBang.SetActive(true);
         animator.SetBool("isCompleteLightPhase", true);
