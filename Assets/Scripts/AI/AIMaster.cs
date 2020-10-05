@@ -244,5 +244,7 @@ public class AIMaster : MonoBehaviour
         myAgent.speed = 0;
         myAgent.angularSpeed = 0;
         particle.gameObject.SetActive(false);
+
+        GameSettings.instance.GetComponent<GameEndCheck>().GameClearEvent();
     }
 }
