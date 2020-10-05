@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AIPrototype.unity
-    guid: 8551f84ad90e161469f621690d6335b0
-  - enabled: 1
-    path: Assets/BJH/Scenes/TestScene.unity
-    guid: 848ee71c79d274b49ae1b6ae4049afeb
+    path: Assets/Scenes/COPY_AIP.unity
+    guid: ed2de1f84b58a5e45b0db104671939f2
   m_configObjects: {}
