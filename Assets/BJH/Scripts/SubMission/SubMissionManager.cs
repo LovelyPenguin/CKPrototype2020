@@ -59,13 +59,13 @@ public class SubMissionManager : MonoBehaviour
                     mis.currentValue += 1;
                     CheckSuckTimes(mis);
                     break;
-                case SubMission.MissionType.SuckPart:
-                    if(mis.bodyPartCode == result.bodyPartCode)
-                    {
-                        mis.currentValue += 1;
-                        CheckSuckPart(mis);
-                    }
-                    break;
+                //case SubMission.MissionType.SuckPart:
+                //    if(mis.bodyPartCode == result.bodyPartCode)
+                //    {
+                //        mis.currentValue += 1;
+                //        CheckSuckPart(mis);
+                //    }
+                //    break;
                 default:
                     break;
             }
@@ -123,11 +123,11 @@ public class SubMissionManager : MonoBehaviour
                         CheckSuckTimes(mission);
                     }
                     break;
-                case SubMission.MissionType.SuckPart:
-                    {
-                        CheckSuckPart(mission);
-                    }
-                    break;
+                //case SubMission.MissionType.SuckPart:
+                //    {
+                //        CheckSuckPart(mission);
+                //    }
+                //    break;
 
                 //잘못된 미션 삭제
                 default:

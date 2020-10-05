@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 public class PauseManager : MonoBehaviour
@@ -44,7 +45,6 @@ public class PauseManager : MonoBehaviour
 
         if(Input.GetKeyDown(toggleKey))
         {
-            Debug.Log("AA");
             ToggleSettings();
         }
     }
@@ -82,7 +82,8 @@ public class PauseManager : MonoBehaviour
             slot.transform.SetParent(missionParent);
 
             slot.SetUI(missions[i]);
-            missions[i].Debugging();
+            //missions[i].Debugging();
+            slot.transform.localScale = Vector3.one;
 
             slots.Add(slot);
         }
@@ -92,7 +93,7 @@ public class PauseManager : MonoBehaviour
     {
         float time = 0f;
         float curvValue;
-        Color bgColor = new Color(1,1,1,0);
+        Color bgColor = new Color(1, 1, 1, 0);
         pauseUIBg.gameObject.SetActive(true);
         DisplayMissions();
 
@@ -102,8 +103,38 @@ public class PauseManager : MonoBehaviour
             time += Time.deltaTime;
             curvValue = Mathf.Lerp(Time.timeScale, 0, time / fadingTime);
 
-            
-            if(curvValue < 0.01f)
+
+            if (curvValue < 0.01f)
+            {
+                curvValue = 0;
+                isPaused = true;
+            }
+            Time.timeScale = curvValue;
+
+            bgColor.a = 1f - curvValue;
+            pauseUIBg.color = bgColor;
+
+            yield return null;
+        }
+
+        isProcessing = false;
+    }
+    IEnumerator StopPausing()
+    {
+        float time = 0f;
+        float curvValue;
+        Color bgColor = new Color(1, 1, 1, 0);
+        pauseUIBg.gameObject.SetActive(true);
+        DisplayMissions();
+
+
+        while (!isPaused)
+        {
+            time += Time.deltaTime;
+            curvValue = Mathf.Lerp(Time.timeScale, 0, time / fadingTime);
+
+
+            if (curvValue < 0.01f)
             {
                 curvValue = 0;
                 isPaused = true;
@@ -119,4 +150,29 @@ public class PauseManager : MonoBehaviour
         isProcessing = false;
     }
 
+
+    #region Methods:Btns
+    public void ResumeBtn()
+    {
+        if (isProcessing) return;
+
+        ToggleSettings();
+    }
+
+    public void RestartLevelBtn()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OptionsBtn()
+    {
+
+    }
+
+    public void ExitBtn()
+    {
+        //메인메뉴 씬 이름 넣기
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    #endregion
 }
