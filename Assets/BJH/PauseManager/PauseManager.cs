@@ -93,7 +93,7 @@ public class PauseManager : MonoBehaviour
     {
         float time = 0f;
         float curvValue;
-        Color bgColor = new Color(1, 1, 1, 0);
+        Color bgColor = new Color(0, 0, 0, 0);
         pauseUIBg.gameObject.SetActive(true);
         DisplayMissions();
 
@@ -111,7 +111,7 @@ public class PauseManager : MonoBehaviour
             }
             Time.timeScale = curvValue;
 
-            bgColor.a = 1f - curvValue;
+            bgColor.a = 0.7f - curvValue;
             pauseUIBg.color = bgColor;
 
             yield return null;
@@ -123,7 +123,7 @@ public class PauseManager : MonoBehaviour
     {
         float time = 0f;
         float curvValue;
-        Color bgColor = new Color(1, 1, 1, 0);
+        Color bgColor = new Color(0, 0, 0, 0);
         pauseUIBg.gameObject.SetActive(true);
         DisplayMissions();
 
@@ -161,6 +161,7 @@ public class PauseManager : MonoBehaviour
 
     public void RestartLevelBtn()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

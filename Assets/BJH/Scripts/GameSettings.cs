@@ -16,7 +16,7 @@ public class GameSettings : MonoBehaviour
         {
             instance = this;
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 }

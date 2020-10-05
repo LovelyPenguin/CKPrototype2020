@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14453cf6793bb849b00af9407aa6539, type: 3}
   m_Name: TestMis2
   m_EditorClassIdentifier: 
-  missionType: 3
+  missionType: 2
   targetValue: 0
   bodyPartCode: 0
   currentValue: 0
