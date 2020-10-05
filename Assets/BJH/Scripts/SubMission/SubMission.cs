@@ -10,7 +10,7 @@ public class SubMission : ScriptableObject
     {
         SuckTimes,
         MakeNoiseSec,
-        SuckPart,
+        //SuckPart,
         NoFailSuck
     }
 
@@ -35,10 +35,10 @@ public class SubMission : ScriptableObject
                 {
                     return $"소음 유발 {mission.targetValue}초 이상 하기";
                 }
-            case MissionType.SuckPart:
-                {
-                    return $"부위 흡혈";
-                }
+            //case MissionType.SuckPart:
+            //    {
+            //        return $"부위 흡혈";
+            //    }
             case MissionType.SuckTimes:
                 {
                     return $"{mission.targetValue}번 이상 흡혈 하기";
@@ -84,8 +84,8 @@ public class SubMission : ScriptableObject
                 isCompleted = false;
                 isFinished = false;
                 break;
-            case MissionType.SuckPart:
-                break;
+            //case MissionType.SuckPart:
+            //    break;
             case MissionType.SuckTimes:
                 currentValue = 0;
                 isCompleted = false;
