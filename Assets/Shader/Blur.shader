@@ -52,15 +52,15 @@
 					return o;
 				}
 
-				sampler2D _GrabTexture;
-				float4 _GrabTexture_TexelSize;
+				sampler2D _CameraOpaqueTexture;
+				float4 _CameraOpaqueTexture_TexelSize;
 				float _Radius;
 
 				half4 frag(v2f i) : COLOR
 				{
 					half4 sum = half4(0,0,0,0);
 
-					#define GRABXYPIXEL(kernelx, kernely) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx, i.uvgrab.y + _GrabTexture_TexelSize.y * kernely, i.uvgrab.z, i.uvgrab.w)))
+					#define GRABXYPIXEL(kernelx, kernely) tex2Dproj(_CameraOpaqueTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _CameraOpaqueTexture_TexelSize.x * kernelx, i.uvgrab.y + _CameraOpaqueTexture_TexelSize.y * kernely, i.uvgrab.z, i.uvgrab.w)))
 
 					sum += GRABXYPIXEL(0.0, 0.0);
 					int measurments = 1;
@@ -114,13 +114,13 @@
 					#else
 					float scale = 1.0;
 					#endif
-					o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y * scale) + o.vertex.w) * 0.5;
+					o.uvgrab.xy = (float2(o.vertex.x, -o.vertex.y * scale) + o.vertex.w) * 0.5;
 					o.uvgrab.zw = o.vertex.zw;
 					return o;
 				}
 
-				sampler2D _GrabTexture;
-				float4 _GrabTexture_TexelSize;
+				sampler2D _CameraOpaqueTexture;
+				float4 _CameraOpaqueTexture_TexelSize;
 				float _Radius;
 
 				half4 frag(v2f i) : COLOR
@@ -129,7 +129,7 @@
 					half4 sum = half4(0,0,0,0);
 					float radius = 1.41421356237 * _Radius;
 
-					#define GRABXYPIXEL(kernelx, kernely) tex2Dproj( _GrabTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _GrabTexture_TexelSize.x * kernelx, i.uvgrab.y + _GrabTexture_TexelSize.y * kernely, i.uvgrab.z, i.uvgrab.w)))
+					#define GRABXYPIXEL(kernelx, kernely) tex2Dproj( _CameraOpaqueTexture, UNITY_PROJ_COORD(float4(i.uvgrab.x + _CameraOpaqueTexture_TexelSize.x * kernelx, i.uvgrab.y + _CameraOpaqueTexture_TexelSize.y * kernely, i.uvgrab.z, i.uvgrab.w)))
 
 					sum += GRABXYPIXEL(0.0, 0.0);
 					int measurments = 1;
