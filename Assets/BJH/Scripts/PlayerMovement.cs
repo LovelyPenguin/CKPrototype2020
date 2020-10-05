@@ -197,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
         this.state = state;
 
         anim.SetBool("Down", false);
+        anim.SetBool("Suck", false);
         switch (state)
         {
             case PLAYERSTATE.DEAD:
@@ -206,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetTrigger("Idle");
                 break;
             case PLAYERSTATE.SUCK:
-                anim.SetTrigger("Suck");
+                anim.SetBool("Suck", true);
                 break;
             case PLAYERSTATE.LANDED:
                 anim.SetBool("Down", true);
