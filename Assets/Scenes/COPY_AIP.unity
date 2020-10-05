@@ -9420,7 +9420,7 @@ MonoBehaviour:
   particle: {fileID: 282697233}
   animator: {fileID: 995540198}
   lightSwitchLocation: {x: 1.54, y: 0, z: 1.57}
-  flashBang: {fileID: 0}
+  flashBang: {fileID: 1643483378}
   randomMoveInterval: 1.5
   randomMoveRange: 1.98
   seekAngle: 60
