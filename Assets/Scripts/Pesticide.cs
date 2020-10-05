@@ -11,12 +11,15 @@ public class Pesticide : MonoBehaviour
 
     public int hitCount = 0;
 
+    private PlayerDeath player;
+
     private void Awake()
     {
         if (ai == null)
         {
             ai = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AIMaster>();
         }
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerDeath>();
     }
 
     // Start is called before the first frame update
@@ -34,12 +37,7 @@ public class Pesticide : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hitCount++;
-            hitText.text = "Hit : " + hitCount;
-            if (hitCount >= 10)
-            {
-                GameSettings.instance.GetComponent<GameEndCheck>().GameOverEvent();
-            }
+            player.CallDamage();
         }
     }
 }
