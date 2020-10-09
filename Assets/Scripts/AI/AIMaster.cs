@@ -9,6 +9,7 @@ public class AIMaster : MonoBehaviour
     private float setRandomMoveInterval = 0;
     private float setReactionSpeed = 0;
     private float timer = 0;
+    private Color previousLightColor;
 
     [Header("Basic Setting")]
     public Transform player;
@@ -16,6 +17,7 @@ public class AIMaster : MonoBehaviour
     public Animator animator;
     public Vector3 lightSwitchLocation;
     public GameObject flashBang;
+    public Light directLight;
 
     [Header("Move Setting")]
     public float randomMoveInterval = 0;
@@ -37,6 +39,9 @@ public class AIMaster : MonoBehaviour
     public float fireInterval;
     public float restInterval;
 
+    [Header("Light Setting")]
+    public Color lightOffColor;
+
     [Header("")]
     public float debugAngle;
     public float debugDistance;
@@ -49,6 +54,7 @@ public class AIMaster : MonoBehaviour
         animator.SetFloat("angryGauge", angryGauge);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         particle.Stop();
+        previousLightColor = directLight.color;
     }
 
     // Update is called once per frame
@@ -158,8 +164,9 @@ public class AIMaster : MonoBehaviour
                 if (!myAgent.hasPath || myAgent.velocity.sqrMagnitude == 0f)
                 {
                     Debug.Log("Light Off");
+                    directLight.color = lightOffColor;
                     animator.SetTrigger("ArriveSwitch");
-                    transform.rotation = LookRotationTarget(player.position, 5f);
+                    //transform.rotation = LookRotationTarget(player.position, 5f);
 
                     if (!context)
                     {
@@ -176,6 +183,7 @@ public class AIMaster : MonoBehaviour
         yield return new WaitForSeconds(5f);
         flashBang.SetActive(true);
         animator.SetBool("isCompleteLightPhase", true);
+        directLight.color = previousLightColor;
     }
 
     public float GetPlayerDistance()
@@ -235,6 +243,20 @@ public class AIMaster : MonoBehaviour
         myAgent.angularSpeed = 0;
         particle.gameObject.SetActive(false);
 
+        StartCoroutine(GameOver());
+    }
+
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(5f);
+
         GameSettings.instance.GetComponent<GameEndCheck>().GameClearEvent();
+    }
+
+    // 모기가 시야에 있는지 체크
+    // 다만 분노 게이지 50미만이면 시야에 있어도 무시함
+    public bool GetInsightMosquito()
+    {
+        return animator.GetBool("IsSight");
     }
 }
