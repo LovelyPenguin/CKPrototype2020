@@ -329,7 +329,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Movement
         targetPos = targetTransform.position + (takeOffdir * movementSpeed * Time.deltaTime);
-        Debug.Log(targetPos);
         currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
 
         targetTransform.position = currentPos;
@@ -400,7 +399,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 hit = hits[i];
 
-                Debug.Log("Count : " + hits.Length + ", " + hit.point + ", " + targetTransform.position);
                 if (Vector3.Distance(hit.point, targetTransform.position) > 0.1f)
                 {
                     cameraTransform.position = hit.point + camRootTransform.forward * 0.1f;

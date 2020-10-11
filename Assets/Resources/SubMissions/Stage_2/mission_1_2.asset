@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionType: 2
   targetValue: 3
-  bodyPartCode: 0
+  targetPart: 1
   currentValue: 0
   isCompleted: 0
   isFinished: 0

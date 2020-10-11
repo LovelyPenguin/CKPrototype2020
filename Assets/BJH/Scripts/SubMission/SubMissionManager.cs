@@ -62,13 +62,14 @@ public class SubMissionManager : MonoBehaviour
                     mis.currentValue += 1;
                     CheckSuckTimes(mis);
                     break;
-                //case SubMission.MissionType.SuckPart:
-                //    if(mis.bodyPartCode == result.bodyPartCode)
-                //    {
-                //        mis.currentValue += 1;
-                //        CheckSuckPart(mis);
-                //    }
-                //    break;
+                case SubMission.MissionType.SuckPart:
+                    Debug.Log(mis.targetPart + ", " + result.bodyPart);
+                    if (mis.targetPart == result.bodyPart)
+                    {
+                        mis.currentValue += 1;
+                        CheckSuckPart(mis);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -180,11 +181,11 @@ public class SubMissionManager : MonoBehaviour
     }
     void CheckSuckPart(SubMission mission)
     {
-        //if(sucked.part == mission.part)
-        //{
-        //    mission.isCompleted = true;
-        //    mission.isFinished = true;
-        //}
+        if (mission.targetValue <= mission.currentValue)
+        {
+            mission.isCompleted = true;
+            mission.isFinished = true;
+        }
     }
     #endregion
 

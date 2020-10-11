@@ -26,6 +26,8 @@ public class BloodSlider : MonoBehaviour
     Vector2 minPos;
     Vector2 maxPos;
 
+    Transform suckTransform;
+
     public enum STATE
     {
         NONE,
@@ -37,8 +39,9 @@ public class BloodSlider : MonoBehaviour
     }
 
 
-    public void StartSucking(float timingRate, float speed = 50)
+    public void StartSucking(Transform suckTransform, float timingRate, float speed = 50)
     {
+        this.suckTransform = suckTransform;
         Debug.Log($"목표 : {timingRate}%");
 
         InitSlider();
@@ -107,6 +110,12 @@ public class BloodSlider : MonoBehaviour
             suckResult.state = STATE.FAILED;
         }
 
+        BodyPart body = suckTransform.GetComponent<BodyPart>();
+        if (body)
+        {
+            suckResult.bodyPart = body.part;
+        }
+
         PopUpManager.FlowText(suckResult.state.ToString());
 
         BloodSuckingManager.instance.QuitSucking();
@@ -137,5 +146,5 @@ public class BloodSlider : MonoBehaviour
 public class SuckResult
 {
     public BloodSlider.STATE state;
-    public int bodyPartCode;
+    public BodyPart.PART bodyPart;
 }

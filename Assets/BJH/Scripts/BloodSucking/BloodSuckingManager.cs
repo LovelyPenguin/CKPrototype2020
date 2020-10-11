@@ -43,12 +43,6 @@ public class BloodSuckingManager : MonoBehaviour
     {
         bsSlider.SuckNow();
     }
-    public void StartSuckingBtn()
-    {
-        int ran = Random.Range((int)minRange, (int)maxRange);
-
-        bsSlider.StartSucking(ran);
-    }
 
 
     bool CheckLandingOnSkin()
@@ -76,12 +70,12 @@ public class BloodSuckingManager : MonoBehaviour
         {
             if(CheckLandingOnSkin())
             {
-                StartSucking();
+                StartSucking(playerMove.landing.landedTransform);
             }
         }
     }
 
-    public void StartSucking()
+    public void StartSucking(Transform suckTransform)
     {
         if (isSucking) return;
 
@@ -91,7 +85,7 @@ public class BloodSuckingManager : MonoBehaviour
 
         int ran = Random.Range((int)minRange, (int)maxRange);
 
-        bsSlider.StartSucking(ran);
+        bsSlider.StartSucking(suckTransform, ran);
     }
     public void QuitSucking()
     {

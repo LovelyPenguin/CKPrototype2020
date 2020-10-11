@@ -17,7 +17,8 @@ public class SubMission : ScriptableObject
     //Inspector
     public MissionType missionType;
     public float targetValue;
-    [HideInInspector]public int bodyPartCode;
+    [Tooltip("부위 흡혈용 프로퍼티입니다.\n 그 외의 미션들은 사용하지 않아도 됩니다.")]
+    public BodyPart.PART targetPart;
     //Inspector
 
     [HideInInspector]
@@ -37,7 +38,7 @@ public class SubMission : ScriptableObject
                 }
             case MissionType.SuckPart:
                 {
-                    return $"부위 흡혈";
+                    return $"{BodyPart.GetPartString(mission.targetPart)} 흡혈하기";
                 }
             case MissionType.SuckTimes:
                 {

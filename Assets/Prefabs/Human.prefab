@@ -4884,6 +4884,7 @@ GameObject:
   - component: {fileID: 1901687709819523456}
   - component: {fileID: 1901687709819523583}
   - component: {fileID: 1901687709819523582}
+  - component: {fileID: 5019782337702096573}
   - component: {fileID: 1901687709819523581}
   m_Layer: 0
   m_Name: Cylinder
@@ -4967,6 +4968,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &5019782337702096573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687709819523579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 1
 --- !u!54 &1901687709819523581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5087,7 +5101,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: OnFailedSuck
+        m_MethodName: OnMakeNoise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5111,6 +5125,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  useLimitIncreaseAngry: 1
+  limitAngry: 50
+  ai: {fileID: 0}
 --- !u!1 &1901687709919059863
 GameObject:
   m_ObjectHideFlags: 0
@@ -5844,6 +5861,7 @@ GameObject:
   - component: {fileID: 1901687710534576755}
   - component: {fileID: 1901687710534576757}
   - component: {fileID: 1901687710534576756}
+  - component: {fileID: 2036655235771380821}
   m_Layer: 0
   m_Name: NeckCol
   m_TagString: Skin
@@ -5887,6 +5905,19 @@ CapsuleCollider:
   m_Height: 0.2
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2036655235771380821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687710534576754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 3
 --- !u!1 &1901687710547117344
 GameObject:
   m_ObjectHideFlags: 0
@@ -6113,6 +6144,7 @@ GameObject:
   - component: {fileID: 1901687710791298649}
   - component: {fileID: 1901687710791298651}
   - component: {fileID: 1901687710791298650}
+  - component: {fileID: 5907744424626512326}
   m_Layer: 0
   m_Name: 'Downside '
   m_TagString: Skin
@@ -6155,6 +6187,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.09
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5907744424626512326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687710791298648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 0
 --- !u!1 &1901687710812499961
 GameObject:
   m_ObjectHideFlags: 0
@@ -6406,6 +6451,7 @@ GameObject:
   - component: {fileID: 1901687711056838099}
   - component: {fileID: 1901687711056838098}
   - component: {fileID: 1901687711056838097}
+  - component: {fileID: 1660650075568000049}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Skin
@@ -6488,6 +6534,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &1660650075568000049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687711056838095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 1
 --- !u!1 &1901687711078534232
 GameObject:
   m_ObjectHideFlags: 0
@@ -6656,7 +6715,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: OnFailedSuck
+        m_MethodName: OnMakeNoise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6680,6 +6739,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  useLimitIncreaseAngry: 1
+  limitAngry: 50
+  ai: {fileID: 0}
 --- !u!1 &1901687711167860793
 GameObject:
   m_ObjectHideFlags: 0
@@ -6721,6 +6783,7 @@ GameObject:
   - component: {fileID: 1901687711186982673}
   - component: {fileID: 1901687711186982675}
   - component: {fileID: 1901687711186982674}
+  - component: {fileID: 6807558248337025602}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Skin
@@ -6764,6 +6827,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6807558248337025602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687711186982672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 2
 --- !u!1 &1901687711313669119
 GameObject:
   m_ObjectHideFlags: 0
@@ -6775,6 +6851,7 @@ GameObject:
   - component: {fileID: 1901687711313668992}
   - component: {fileID: 1901687711313668994}
   - component: {fileID: 1901687711313668993}
+  - component: {fileID: 4939030876940794670}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Skin
@@ -6818,6 +6895,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4939030876940794670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687711313669119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 2
 --- !u!1 &1901687711331433044
 GameObject:
   m_ObjectHideFlags: 0
@@ -7011,6 +7101,7 @@ GameObject:
   - component: {fileID: 1901687711402382709}
   - component: {fileID: 1901687711402382711}
   - component: {fileID: 1901687711402382710}
+  - component: {fileID: 8881494883363444814}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Skin
@@ -7054,6 +7145,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8881494883363444814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687711402382708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 2
 --- !u!1 &1901687711530460583
 GameObject:
   m_ObjectHideFlags: 0
@@ -7379,6 +7483,7 @@ GameObject:
   - component: {fileID: 1901687711787437844}
   - component: {fileID: 1901687711787437846}
   - component: {fileID: 1901687711787437845}
+  - component: {fileID: 6601576171045888024}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Skin
@@ -7422,6 +7527,19 @@ CapsuleCollider:
   m_Height: 0.24
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6601576171045888024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901687711787437843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 396df837e735cb743942aec7d334a858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  part: 2
 --- !u!1 &1901687711821182067
 GameObject:
   m_ObjectHideFlags: 0

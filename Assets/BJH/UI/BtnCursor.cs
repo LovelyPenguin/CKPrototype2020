@@ -18,7 +18,6 @@ public class BtnCursor : MonoBehaviour
 
     public void OnPointerOver()
     {
-        Debug.Log("asd");
         BtnManager.instance.PutCursor(transform);
     }
 }

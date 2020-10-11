@@ -8,7 +8,8 @@ public class BodyPart : MonoBehaviour
     {
         FACE,
         ARM,
-        LEG
+        LEG,
+        NECK
     }
 
     public PART part;
@@ -27,6 +28,8 @@ public class BodyPart : MonoBehaviour
                 return "얼굴";
             case PART.LEG:
                 return "다리";
+            case PART.NECK:
+                return "목";
             default:
                 return "";
         }
