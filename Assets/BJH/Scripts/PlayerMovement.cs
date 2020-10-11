@@ -93,6 +93,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.VeryNiceKey)))
+        {
+            KnockBackFromLand(5,1);
+        }
         //CheckIsRotating();
 
         //Check if landed
@@ -115,6 +119,12 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PLAYERSTATE.FLYING:
                 FlyingMovement();
+                break;
+            case PLAYERSTATE.KNOCKBACK:
+                KnockBackMovement();
+                break;
+            case PLAYERSTATE.TAKEOFF:
+                TakeOffMovement();
                 break;
         }
         if (state != PLAYERSTATE.DEAD) 
@@ -162,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
-            SetAnimState(PLAYERSTATE.FLYING);
             verticalInput = 1;
         }
         else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
@@ -185,20 +194,19 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = 0.3f;
     }
 
-    void CheckIsRotating()
-    {
-        isRotating = true;
-        if (BloodSuckingManager.instance.isSucking) isRotating = false;
-    }
 
     #region Methods:KnockBack
+    Vector3 knockBackVel;
     public void KnockBack(Vector3 vel, float time)
     {
+        landing.isLanded = false;
         SetAnimState(PLAYERSTATE.KNOCKBACK);
-
+        knockBackVel = vel;
+        StartCoroutine(StopKnockBack(time));
     }
     public void KnockBackFromLand(float power, float time)
     {
+        if (!landing.isLanded) return;
         KnockBack(landing.landingNormal * power, time);
     }
 
@@ -206,7 +214,8 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        SetAnimState(PLAYERSTATE.FLYING);
+        if (knockBackVel != Vector3.zero)
+            SetAnimState(PLAYERSTATE.FLYING);
     }
     #endregion
 
@@ -262,11 +271,13 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
-            SetAnimState(PLAYERSTATE.FLYING);
+            SetAnimState(PLAYERSTATE.TAKEOFF);
 
             targetPos = targetTransform.position;
             currentPos = targetPos;
-            FlyingMovement();
+
+            takeOffdir = landing.landingNormal;
+            takeOffStartTime = Time.time;
         }
 
         CamRotation();
@@ -290,12 +301,40 @@ public class PlayerMovement : MonoBehaviour
 
     void KnockBackMovement()
     {
-        
+        Ray ray = new Ray(targetTransform.position, knockBackVel.normalized);
+        if(Physics.Raycast(ray, 1))
+        {
+            knockBackVel = Vector3.zero;
+            SetAnimState(PLAYERSTATE.FLYING);
+        }
+
+        targetPos = targetTransform.position + knockBackVel * Time.deltaTime;
+
+        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
+
+        targetTransform.position = currentPos;
+
+        CamRotation();
     }
 
+    Vector3 takeOffdir;
+    float takeOffStartTime;
     void TakeOffMovement()
     {
+        if((Time.time - takeOffStartTime > 0.5f) || Input.GetKeyUp(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
+        {
+            takeOffdir = Vector3.zero;
+            SetAnimState(PLAYERSTATE.FLYING);
+        }
 
+        //Movement
+        targetPos = targetTransform.position + (takeOffdir * movementSpeed * Time.deltaTime);
+        Debug.Log(targetPos);
+        currentPos = Vector3.SmoothDamp(currentPos, targetPos, ref currentPosVelocity, moveSmoothTime);
+
+        targetTransform.position = currentPos;
+
+        CamRotation();
     }
 
     void DeadMovement()
@@ -374,9 +413,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void TargetRotation()
-    {        
+    {
         //Target Rotation
-
+        //currentTargetRot = targetTransform.rotation.eulerAngles;
         if (currentTargetRot != currentCamRot)
         {
             currentTargetRot = Vector3.SmoothDamp(currentTargetRot, currentCamRot, ref currentTargetRotVelocity, targetRotSmoothTime);

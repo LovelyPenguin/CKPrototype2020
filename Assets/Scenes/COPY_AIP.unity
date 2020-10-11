@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1784,6 +1784,7 @@ MonoBehaviour:
   missions:
   - {fileID: 11400000, guid: a26424b533a98ae4080b8645aa87503c, type: 2}
   - {fileID: 11400000, guid: cad07ead297c61546afb4ec12ef59c0f, type: 2}
+  - {fileID: 11400000, guid: 2ea09248ee5a5f04582e7f64d99dadd7, type: 2}
   clearedSpr: {fileID: 21300000, guid: 8d14febf787e28444b40288476b8be84, type: 3}
   notClearedSpr: {fileID: 21300000, guid: 9e27a23b061d4f74caa08d816471a431, type: 3}
 --- !u!4 &411190922
@@ -1798,7 +1799,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428696031
 GameObject:
@@ -3391,8 +3392,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: OnFailedSuck
+      - m_Target: {fileID: 411190921}
+        m_MethodName: OnMakeNoise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3847,7 +3848,7 @@ Transform:
   m_Children:
   - {fileID: 923987972}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &911526658
 MonoBehaviour:
@@ -4062,7 +4063,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &939583594
 GameObject:
@@ -4753,7 +4754,7 @@ Transform:
   - {fileID: 1471269329}
   - {fileID: 5771153164494200463}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1011975824
 PrefabInstance:
@@ -5143,7 +5144,7 @@ PrefabInstance:
     - target: {fileID: 6833536124107321519, guid: d2f3fd9973b16854f9ed1b3871b79c72,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6833536124107321519, guid: d2f3fd9973b16854f9ed1b3871b79c72,
         type: 3}
@@ -7111,7 +7112,7 @@ RectTransform:
   - {fileID: 115772524}
   - {fileID: 1350715782}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7224,8 +7225,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: OnFailedSuck
+      - m_Target: {fileID: 411190921}
+        m_MethodName: OnMakeNoise
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7561,7 +7562,7 @@ RectTransform:
   - {fileID: 701372228}
   - {fileID: 1048533207}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8042,53 +8043,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!1 &1603023189
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1603023191}
-  - component: {fileID: 1603023190}
-  m_Layer: 0
-  m_Name: SubMissionManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1603023190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603023189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f97503ca05746e4983a33c815bbbc70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  missions:
-  - {fileID: 11400000, guid: a26424b533a98ae4080b8645aa87503c, type: 2}
-  clearedSpr: {fileID: 0}
-  notClearedSpr: {fileID: 0}
---- !u!4 &1603023191
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603023189}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.6999999, z: -6.4329944}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1608468606
 GameObject:
   m_ObjectHideFlags: 0
@@ -8579,7 +8533,7 @@ RectTransform:
   m_Children:
   - {fileID: 503012878}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9084,7 +9038,7 @@ Transform:
   m_Children:
   - {fileID: 1062757873}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841243459
 GameObject:
@@ -10812,7 +10766,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2086068196
 MonoBehaviour:
