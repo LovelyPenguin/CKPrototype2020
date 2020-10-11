@@ -60,7 +60,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case State.PHASE5:
-                if (enemy.angryGauge >= 50)
+                if (enemy.angryGauge >= 100)
                 {
                     Phase6();
                 }
