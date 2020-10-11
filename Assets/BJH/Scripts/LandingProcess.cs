@@ -22,7 +22,6 @@ public class LandingProcess : MonoBehaviour
 
         if ((mask & colliderLayer.value) != 0)
         {
-            Debug.Log("AA");
             isLanded = true;
             landedTransform = collision.transform;
             landingNormal = (collision.contacts[0].normal);

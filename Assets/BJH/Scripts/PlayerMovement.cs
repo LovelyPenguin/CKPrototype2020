@@ -96,16 +96,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.VeryNiceKey)))
-        {
-            KnockBackFromLand(5,1);
-        }
+
         //CheckIsRotating();
 
         //Check if landed
         if (landing.isLanded && state == PLAYERSTATE.FLYING)
         {
-            Debug.Log("Flying->Landing");
             SetAnimState(PLAYERSTATE.LANDING);
         }
 
@@ -208,6 +204,7 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log(vel);
         StartCoroutine(StopKnockBack(time));
+        targetTransform.SetParent(null);
     }
     public void KnockBackFromLand(float power, float time)
     {
@@ -310,8 +307,13 @@ public class PlayerMovement : MonoBehaviour
     void KnockBackMovement()
     {
         Ray ray = new Ray(targetTransform.position, knockBackVel.normalized);
-        if(Physics.Raycast(ray, 1))
+        Debug.DrawRay(targetTransform.position, knockBackVel.normalized);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1);
+        for(int i = 0; i < hits.Length; i++)
         {
+            if (hits[i].transform == targetTransform) continue;
+
+            Debug.Log("Knockback Hit");
             landing.isLanded = false;
             knockBackVel = Vector3.zero;
             SetAnimState(PLAYERSTATE.FLYING);
@@ -417,11 +419,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 hit = hits[i];
 
-                if (Vector3.Distance(hit.point, targetTransform.position) > 0.15f)
+
+                if (hit.transform == targetTransform) continue;
+                if(landing.isLanded)
                 {
-                    cameraTransform.position = hit.point + camRootTransform.forward * 0.1f;
-                    break;
+                    float dot = Vector3.Dot(hit.normal, landing.landingNormal);
+                    if (dot < 0) break;
                 }
+
+                cameraTransform.position = hit.point + camRootTransform.forward * 0.1f;
+                break;
             }
         }
         else
