@@ -35,8 +35,10 @@ public class Pesticide : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
+        //Debug.Log("Hit");
         if (other.CompareTag("Player"))
         {
+            hitCount++;
             player.CallDamage();
         }
     }
