@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/COPY_AIP.unity
-    guid: ed2de1f84b58a5e45b0db104671939f2
-  - enabled: 1
     path: Assets/Scenes/StageSelect.unity
     guid: 397299abc6c52f34b9fe646a30b46e81
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: d8e9f13f9f65e1b4ca615d535e1b44a4
+  - enabled: 1
+    path: Assets/Scenes/Stages/Stage1.unity
+    guid: 6cb0957327036cb449c76f926fe6f01e
   m_configObjects: {}
