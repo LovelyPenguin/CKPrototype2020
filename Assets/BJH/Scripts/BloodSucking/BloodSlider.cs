@@ -42,7 +42,6 @@ public class BloodSlider : MonoBehaviour
     public void StartSucking(Transform suckTransform, float timingRate, float speed = 50)
     {
         this.suckTransform = suckTransform;
-        Debug.Log($"목표 : {timingRate}%");
 
         InitSlider();
         this.timingRate = timingRate;
@@ -139,7 +138,7 @@ public class BloodSlider : MonoBehaviour
         {
             SubMissionManager.instance.OnFailedSuck();
         }
-        Debug.Log(suckResult.state);
+
     }
 }
 

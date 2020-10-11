@@ -93,6 +93,7 @@ public class BloodSuckingManager : MonoBehaviour
         isSucking = false;
         playerMove.SetAnimState(PlayerMovement.PLAYERSTATE.LANDED);
         bloodSuckUI.SetActive(false);
+        playerMove.KnockBackFromLand(3, 1f);
     }
 
     public float GetSuckRageRate(BloodSlider.STATE state)

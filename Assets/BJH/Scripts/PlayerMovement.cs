@@ -56,12 +56,15 @@ public class PlayerMovement : MonoBehaviour
     Vector3 currentPosVelocity;
     float moveSmoothTime = 0.01f;
 
+    Vector3 currentCamPos;
+    Vector3 targetCamPos;
+    Vector3 currentCamPosVelocity;
+
     Vector3 currentCamRotInput;
     Vector3 targetCamRot;
     Vector3 currentCamRot;
     Vector3 currentCamRotVelocity;
 
-    Vector3 currentTargetRotInput;
     Vector3 targetTargetRot;
     Vector3 currentTargetRot;
     Vector3 currentTargetRotVelocity;
@@ -127,8 +130,8 @@ public class PlayerMovement : MonoBehaviour
                 TakeOffMovement();
                 break;
         }
-        if (state != PLAYERSTATE.DEAD) 
-            camRootTransform.position = targetTransform.position;
+        if (state != PLAYERSTATE.DEAD)
+            CamMovement();
 
     }
 
@@ -202,12 +205,14 @@ public class PlayerMovement : MonoBehaviour
         landing.isLanded = false;
         SetAnimState(PLAYERSTATE.KNOCKBACK);
         knockBackVel = vel;
+
+        Debug.Log(vel);
         StartCoroutine(StopKnockBack(time));
     }
     public void KnockBackFromLand(float power, float time)
     {
         if (!landing.isLanded) return;
-        KnockBack(landing.landingNormal * power, time);
+        KnockBack(targetTransform.up.normalized * power, time);
     }
 
     IEnumerator StopKnockBack(float time)
@@ -215,7 +220,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         if (knockBackVel != Vector3.zero)
+        {
             SetAnimState(PLAYERSTATE.FLYING);
+            landing.isLanded = false;
+        }
     }
     #endregion
 
@@ -304,6 +312,7 @@ public class PlayerMovement : MonoBehaviour
         Ray ray = new Ray(targetTransform.position, knockBackVel.normalized);
         if(Physics.Raycast(ray, 1))
         {
+            landing.isLanded = false;
             knockBackVel = Vector3.zero;
             SetAnimState(PLAYERSTATE.FLYING);
         }
@@ -370,6 +379,15 @@ public class PlayerMovement : MonoBehaviour
 
         targetTransform.position = currentPos;
     }
+    void CamMovement()
+    {
+        //Cam Movement
+        targetCamPos = targetTransform.position;
+
+        currentCamPos = Vector3.SmoothDamp(currentCamPos, targetCamPos, ref currentCamPosVelocity, moveSmoothTime);
+
+        camRootTransform.position = currentCamPos;
+    }
 
     void CamRotation()
     {
@@ -399,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 hit = hits[i];
 
-                if (Vector3.Distance(hit.point, targetTransform.position) > 0.1f)
+                if (Vector3.Distance(hit.point, targetTransform.position) > 0.15f)
                 {
                     cameraTransform.position = hit.point + camRootTransform.forward * 0.1f;
                     break;

@@ -31,6 +31,7 @@ public class SubMissionManager : MonoBehaviour
 
     private void Start()
     {
+        LoadMissions(stageNum);
     }
     void InitializeMissions()
     {

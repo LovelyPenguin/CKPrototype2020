@@ -2248,7 +2248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f97503ca05746e4983a33c815bbbc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageNum: 0
+  stageNum: 1
   missions: []
   clearedSpr: {fileID: 21300000, guid: 8d14febf787e28444b40288476b8be84, type: 3}
   notClearedSpr: {fileID: 21300000, guid: 9e27a23b061d4f74caa08d816471a431, type: 3}
