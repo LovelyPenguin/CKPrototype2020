@@ -399,9 +399,11 @@ public class PlayerMovement : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 hit = hits[i];
-                if (hit.transform != targetTransform && hit.transform != landing.landedTransform)
+
+                Debug.Log("Count : " + hits.Length + ", " + hit.point + ", " + targetTransform.position);
+                if (Vector3.Distance(hit.point, targetTransform.position) > 0.1f)
                 {
-                    cameraTransform.position = hits[i].point + camRootTransform.forward * 0.1f;
+                    cameraTransform.position = hit.point + camRootTransform.forward * 0.1f;
                     break;
                 }
             }
@@ -415,7 +417,6 @@ public class PlayerMovement : MonoBehaviour
     void TargetRotation()
     {
         //Target Rotation
-        //currentTargetRot = targetTransform.rotation.eulerAngles;
         if (currentTargetRot != currentCamRot)
         {
             currentTargetRot = Vector3.SmoothDamp(currentTargetRot, currentCamRot, ref currentTargetRotVelocity, targetRotSmoothTime);
