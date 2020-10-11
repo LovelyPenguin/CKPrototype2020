@@ -116,12 +116,12 @@ public class BloodSlider : MonoBehaviour
                 ai.IncreaseAngryGauge(
                 BloodSuckingManager.instance.GetSuckRangeRate(suckResult.state));
             SubMissionManager.instance.OnSuck(suckResult);
+            suckEvent.Invoke();
         }
         else
         {
             SubMissionManager.instance.OnFailedSuck();
         }
-        suckEvent.Invoke();
         Debug.Log(suckResult.state);
     }
 }
