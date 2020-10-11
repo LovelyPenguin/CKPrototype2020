@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d2b2dda54be4480a0195f55cf92245, type: 3}
   m_Name: NewSSAO
   m_EditorClassIdentifier: 
-  m_Active: 0
   settings:
     renderPassEvent: 550
     totalStrength: 0.72
@@ -20,6 +19,26 @@ MonoBehaviour:
     area: 0.63
     falloff: 0.0001
     radius: 0.019
+    debug: 0
+--- !u!114 &-3003850208855416872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d2b2dda54be4480a0195f55cf92245, type: 3}
+  m_Name: NewSSAO
+  m_EditorClassIdentifier: 
+  settings:
+    renderPassEvent: 300
+    totalStrength: 1
+    brightnessCorrection: 0.1
+    area: 5
+    falloff: 0.01
+    radius: 0.02
     debug: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -34,8 +53,8 @@ MonoBehaviour:
   m_Name: PPA_URP_Renderer
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -8911622966538761846}
-  m_RendererFeatureMap: 8a893eb3208e5384
+  - {fileID: 0}
+  - {fileID: -3003850208855416872}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
@@ -57,4 +76,3 @@ MonoBehaviour:
     passOperation: 0
     failOperation: 0
     zFailOperation: 0
-  m_ShadowTransparentReceive: 1
