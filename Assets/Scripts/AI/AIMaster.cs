@@ -10,6 +10,7 @@ public class AIMaster : MonoBehaviour
     private float setReactionSpeed = 0;
     private float timer = 0;
     private Color previousLightColor;
+    private PlayerMovement playerState;
 
     [Header("Basic Setting")]
     public Transform player;
@@ -55,6 +56,7 @@ public class AIMaster : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         particle.Stop();
         previousLightColor = directLight.color;
+        playerState = player.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -201,14 +203,20 @@ public class AIMaster : MonoBehaviour
 
     public void IncreaseAngryGauge()
     {
-        angryGauge += Time.deltaTime * 2;
-        animator.SetFloat("angryGauge",angryGauge);
+        if (playerState.state != PlayerMovement.PLAYERSTATE.LANDED)
+        {
+            angryGauge += Time.deltaTime * 2;
+            animator.SetFloat("angryGauge", angryGauge);
+        }
     }
 
     public void IncreaseAngryGauge(float increasePercent)
     {
-        angryGauge += Time.deltaTime * increasePercent;
-        animator.SetFloat("angryGauge", angryGauge);
+        if (playerState.state != PlayerMovement.PLAYERSTATE.LANDED)
+        {
+            angryGauge += Time.deltaTime * increasePercent;
+            animator.SetFloat("angryGauge", angryGauge);
+        }
     }
 
     public void AddAngryGauge(float value)

@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case State.PHASE4:
-                if (player.state == PlayerMovement.PLAYERSTATE.LANDED)
+                if (player.state == PlayerMovement.PLAYERSTATE.LANDED && player.landing.landedTransform.CompareTag("Skin"))
                 {
                     Phase5();
                 }
