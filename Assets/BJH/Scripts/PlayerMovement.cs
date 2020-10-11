@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         FLYING,
         LANDING,
         LANDED,
+        KNOCKBACK,
+        TAKEOFF,
         SUCK,
         CANNOTMOVE,
         DEAD
@@ -189,6 +191,24 @@ public class PlayerMovement : MonoBehaviour
         if (BloodSuckingManager.instance.isSucking) isRotating = false;
     }
 
+    #region Methods:KnockBack
+    public void KnockBack(Vector3 vel, float time)
+    {
+        SetAnimState(PLAYERSTATE.KNOCKBACK);
+
+    }
+    public void KnockBackFromLand(float power, float time)
+    {
+        KnockBack(landing.landingNormal * power, time);
+    }
+
+    IEnumerator StopKnockBack(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        SetAnimState(PLAYERSTATE.FLYING);
+    }
+    #endregion
 
     #region Methods:State
 
@@ -239,11 +259,7 @@ public class PlayerMovement : MonoBehaviour
     void LandedMovement()
     {
         //Landed->Flying
-        if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveForward)) ||
-            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveBackward)) ||
-            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveLeft)) ||
-            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveRight)) ||
-            Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
+        if(Input.GetKeyDown(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveUp)))
         {
             landing.isLanded = false;
             SetAnimState(PLAYERSTATE.FLYING);
@@ -270,6 +286,16 @@ public class PlayerMovement : MonoBehaviour
             targetTransform.SetParent(null);
             targetTransform.localScale = Vector3.one;
         }
+    }
+
+    void KnockBackMovement()
+    {
+        
+    }
+
+    void TakeOffMovement()
+    {
+
     }
 
     void DeadMovement()

@@ -22,6 +22,9 @@ public class KeyBindings
         //Else
         ToggleSettings,
 
+        //for Develop
+        VeryNiceKey,
+
         None
     }
 
@@ -60,10 +63,11 @@ public class KeyBindings
 
         SetKeyCode(KeyBindIndex.MoveLeft, KeyCode.A);
         SetKeyCode(KeyBindIndex.MoveRight, KeyCode.D);
-        SetKeyCode(KeyBindIndex.MoveUp, KeyCode.E);
-        SetKeyCode(KeyBindIndex.MoveDown, KeyCode.Q);
         SetKeyCode(KeyBindIndex.MoveForward, KeyCode.W);
         SetKeyCode(KeyBindIndex.MoveBackward, KeyCode.S);
+        SetKeyCode(KeyBindIndex.MoveUp, KeyCode.Space);
+        SetKeyCode(KeyBindIndex.MoveDown, KeyCode.LeftShift);
+        SetKeyCode(KeyBindIndex.VeryNiceKey, KeyCode.K);
         SetKeyCode(KeyBindIndex.ToggleSettings, KeyCode.Escape);
     }
 
