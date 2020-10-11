@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: -1858355165280815535
     second: humen_attack_walk
+  - first:
+      74: 2775180547035763231
+    second: humen_attack_walk2
   externalObjects:
   - first:
       type: UnityEngine:Material

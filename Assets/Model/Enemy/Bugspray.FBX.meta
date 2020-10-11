@@ -1,20 +1,9 @@
 fileFormatVersion: 2
-guid: c5f5ff61c2f88ff4a814e5e179550827
+guid: 7747ca12f5d88b4479d2abd52cd6e760
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable:
-  - first:
-      74: 274384438944190192
-    second: humen_walk
-  - first:
-      74: 4292869025551753453
-    second: humen_wal2
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material #26
-    second: {fileID: 2100000, guid: 82ab7ea66f2b95247977ff0f9b937b71, type: 2}
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
