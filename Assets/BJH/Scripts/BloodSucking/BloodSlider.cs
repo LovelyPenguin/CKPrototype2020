@@ -124,12 +124,12 @@ public class BloodSlider : MonoBehaviour
             }
 
             SubMissionManager.instance.OnSuck(suckResult);
+            suckEvent.Invoke();
         }
         else
         {
             SubMissionManager.instance.OnFailedSuck();
         }
-        suckEvent.Invoke();
         Debug.Log(suckResult.state);
     }
 }

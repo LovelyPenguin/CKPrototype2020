@@ -10,6 +10,16 @@ public class TriggerEventMessanger : MonoBehaviour
     public UnityEvent triggerStay;
     public UnityEvent triggerExit;
 
+    public bool useLimitIncreaseAngry = true;
+    public float limitAngry = 50f;
+
+    public AIMaster ai;
+
+    private void Start()
+    {
+        ai = GetComponentInParent<AIMaster>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(targetTag))
@@ -22,7 +32,10 @@ public class TriggerEventMessanger : MonoBehaviour
     {
         if (other.CompareTag(targetTag))
         {
-            triggerStay.Invoke();
+            if (useLimitIncreaseAngry && ai.angryGauge < limitAngry)
+            {
+                triggerStay.Invoke();
+            }
         }
     }
 

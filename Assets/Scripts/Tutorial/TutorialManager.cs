@@ -19,7 +19,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject movementTutorial;
     public Text messageBox;
     public Camera cam;
-    public LandingProcess player;
+    public PlayerMovement player;
     public AIMaster enemy;
     private Transform enemyPos;
     private Transform playerPos;
@@ -28,7 +28,7 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(TutorialStart());
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<LandingProcess>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AIMaster>();
         enemyPos = enemy.GetComponent<Transform>();
         playerPos = player.GetComponent<Transform>();
@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
                 }
                 break;
             case State.PHASE4:
-                if (player.isLanded)
+                if (player.state == PlayerMovement.PLAYERSTATE.LANDED && player.landing.landedTransform.CompareTag("Skin"))
                 {
                     Phase5();
                 }
