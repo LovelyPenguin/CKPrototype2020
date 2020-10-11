@@ -12,7 +12,7 @@ public class DeleteSaveData : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -32,6 +32,7 @@ public class DeleteSaveData : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             Debug.Log("Delete All data");
             PlayerPrefs.DeleteAll();
+            gameObject.GetComponent<MoveScene>().OnClick();
         }
         text.text = "OK?";
     }

@@ -18,5 +18,7 @@ public class GameSettings : MonoBehaviour
 
             //DontDestroyOnLoad(gameObject);
         }
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

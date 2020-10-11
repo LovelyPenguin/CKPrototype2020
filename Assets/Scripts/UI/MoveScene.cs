@@ -24,7 +24,6 @@ public class MoveScene : MonoBehaviour
     }
     public void OnClick()
     {
-        Debug.Log("LOAD");
         StartCoroutine(LoadYourAsyncScene());
     }
 
