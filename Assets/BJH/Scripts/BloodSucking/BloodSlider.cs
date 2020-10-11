@@ -89,6 +89,7 @@ public class BloodSlider : MonoBehaviour
     {
         float result = Mathf.Abs(slider.value - timingRate);
 
+
         if (result < stateRate[0])
         {
             suckResult.state = STATE.EXCELLENT;
@@ -106,15 +107,22 @@ public class BloodSlider : MonoBehaviour
             suckResult.state = STATE.FAILED;
         }
 
+        PopUpManager.FlowText(suckResult.state.ToString());
+
         BloodSuckingManager.instance.QuitSucking();
 
         //흡혈 성공시
         if(suckResult.state != STATE.FAILED)
         {
+
             AIMaster ai = FindObjectOfType<AIMaster>();
+
             if(ai)
-                ai.IncreaseAngryGauge(
-                BloodSuckingManager.instance.GetSuckRangeRate(suckResult.state));
+            {
+                float value = BloodSuckingManager.instance.GetSuckRageRate(suckResult.state);
+                ai.AddAngryGauge(value);
+            }
+
             SubMissionManager.instance.OnSuck(suckResult);
         }
         else

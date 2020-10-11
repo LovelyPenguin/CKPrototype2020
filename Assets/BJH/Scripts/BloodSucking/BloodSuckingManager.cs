@@ -101,7 +101,7 @@ public class BloodSuckingManager : MonoBehaviour
         bloodSuckUI.SetActive(false);
     }
 
-    public float GetSuckRangeRate(BloodSlider.STATE state)
+    public float GetSuckRageRate(BloodSlider.STATE state)
     {
         //None이 0.
         //1 깎아야함

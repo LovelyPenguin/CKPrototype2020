@@ -7,6 +7,8 @@ public class SubMissionManager : MonoBehaviour
     public static SubMissionManager instance;
 
     //Inspector
+    [SerializeField] int stageNum = 0;
+
     [SerializeField] List<SubMission> missions;
 
     [SerializeField] Sprite clearedSpr;
@@ -24,15 +26,16 @@ public class SubMissionManager : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.L)) LoadMissions(stageNum);
     }
 
     private void Start()
     {
-        InitializeMissions();
     }
     void InitializeMissions()
     {
+        
+
         SubMission mission;
         for(int i = 0; i < missions.Count; i++)
         {
@@ -183,5 +186,25 @@ public class SubMissionManager : MonoBehaviour
         //    mission.isFinished = true;
         //}
     }
+    #endregion
+
+    #region Methods:LoadMissions
+    string missionsAddress = "SubMissions";
+    public void LoadMissions(int stage)
+    {
+        string adr = missionsAddress + $"/Stage_{stage}";
+
+        SubMission[] missions = Resources.LoadAll<SubMission>(adr);
+
+        this.missions.Clear();
+
+        for(int i = 0; i < missions.Length; i++)
+        {
+            this.missions.Add(missions[i]);
+        }
+
+        InitializeMissions();
+    }
+
     #endregion
 }

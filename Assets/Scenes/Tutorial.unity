@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2247,6 +2247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f97503ca05746e4983a33c815bbbc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageNum: 0
   missions: []
   clearedSpr: {fileID: 21300000, guid: 8d14febf787e28444b40288476b8be84, type: 3}
   notClearedSpr: {fileID: 21300000, guid: 9e27a23b061d4f74caa08d816471a431, type: 3}
@@ -5049,6 +5050,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &955461611
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 239.44089
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 132.05156
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -26.660347
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 756270496687952702, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5023168233594748500, guid: a766d144375a16f4f80cd8a3784d020b,
+        type: 3}
+      propertyPath: m_Name
+      value: PopupManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a766d144375a16f4f80cd8a3784d020b, type: 3}
 --- !u!1 &955704150
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,18 +5268,7 @@ MonoBehaviour:
   speed: 50
   suckEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1123444200}
-        m_MethodName: AddAngryGauge
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 30
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   stateRate:
   - 3
   - 6
@@ -9416,7 +9475,7 @@ GameObject:
   - component: {fileID: 1712402043}
   - component: {fileID: 1712402042}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: KeyBindingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
