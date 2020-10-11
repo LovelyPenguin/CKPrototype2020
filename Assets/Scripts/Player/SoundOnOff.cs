@@ -16,7 +16,8 @@ public class SoundOnOff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.state == PlayerMovement.PLAYERSTATE.LANDED)
+        if (player.state == PlayerMovement.PLAYERSTATE.LANDED ||
+            player.state == PlayerMovement.PLAYERSTATE.SUCK)
         {
             audio.mute = true;
         }

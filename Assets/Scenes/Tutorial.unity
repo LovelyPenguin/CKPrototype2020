@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2095,6 +2095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localSelectImage: {fileID: 321664734}
+  useGameSetting: 1
 --- !u!1 &378932445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,6 +3153,7 @@ GameObject:
   - component: {fileID: 590780756}
   - component: {fileID: 590780755}
   - component: {fileID: 590780758}
+  - component: {fileID: 590780759}
   m_Layer: 5
   m_Name: Next
   m_TagString: Untagged
@@ -3233,6 +3235,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 590780759}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &590780756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3282,6 +3295,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localSelectImage: {fileID: 321664734}
+  useGameSetting: 1
+--- !u!114 &590780759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 590780753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42886857eff4d9439d6fbd63ec93a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Stage1
 --- !u!1 &597962937
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4484,7 @@ GameObject:
   - component: {fileID: 889387391}
   - component: {fileID: 889387390}
   - component: {fileID: 889387393}
+  - component: {fileID: 889387394}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -4527,8 +4555,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: RestartLevelBtn
+      - m_Target: {fileID: 889387394}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4587,6 +4615,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localSelectImage: {fileID: 321664734}
+  useGameSetting: 1
+--- !u!114 &889387394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889387388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42886857eff4d9439d6fbd63ec93a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: StageSelect
 --- !u!1 &909099608
 GameObject:
   m_ObjectHideFlags: 0
@@ -8132,6 +8174,7 @@ GameObject:
   - component: {fileID: 1458286635}
   - component: {fileID: 1458286634}
   - component: {fileID: 1458286633}
+  - component: {fileID: 1458286637}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -8172,6 +8215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localSelectImage: {fileID: 293790733}
+  useGameSetting: 1
 --- !u!114 &1458286634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8215,8 +8259,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: RestartLevelBtn
+      - m_Target: {fileID: 1458286637}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8262,6 +8306,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458286631}
   m_CullTransparentMesh: 0
+--- !u!114 &1458286637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458286631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42886857eff4d9439d6fbd63ec93a05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: StageSelect
 --- !u!1 &1487086084
 GameObject:
   m_ObjectHideFlags: 0
@@ -10376,6 +10433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localSelectImage: {fileID: 293790733}
+  useGameSetting: 1
 --- !u!114 &1891539603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11866,6 +11924,7 @@ GameObject:
   - component: {fileID: 2086068190}
   - component: {fileID: 2086068189}
   - component: {fileID: 2086068196}
+  - component: {fileID: 2086068197}
   m_Layer: 0
   m_Name: GameSettings
   m_TagString: Untagged
@@ -12006,6 +12065,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2086068197}
+        m_MethodName: SaveStageData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   gameOver:
     m_PersistentCalls:
       m_Calls:
@@ -12020,6 +12090,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &2086068197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086068188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bee045369462c4e9b659ffc280e9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveStageName: Tutorial
 --- !u!1 &2086111225
 GameObject:
   m_ObjectHideFlags: 0

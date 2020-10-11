@@ -6,10 +6,14 @@ using UnityEngine.EventSystems;
 public class OverlaySelect : MonoBehaviour, IPointerEnterHandler
 {
     public GameObject localSelectImage;
+    public bool useGameSetting = true;
     // Start is called before the first frame update
     void Start()
     {
-        GameSettings.instance.GetComponent<PauseManager>().ToggleSettings();
+        if (useGameSetting)
+        {
+            GameSettings.instance.GetComponent<PauseManager>().ToggleSettings();
+        }
     }
 
     // Update is called once per frame
