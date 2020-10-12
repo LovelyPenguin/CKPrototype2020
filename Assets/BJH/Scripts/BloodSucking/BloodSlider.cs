@@ -129,6 +129,7 @@ public class BloodSlider : MonoBehaviour
             {
                 float value = BloodSuckingManager.instance.GetSuckRageRate(suckResult.state);
                 ai.AddAngryGauge(value);
+                
             }
 
             SubMissionManager.instance.OnSuck(suckResult);

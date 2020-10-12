@@ -11,7 +11,9 @@ public class SubMission : ScriptableObject
         SuckTimes,
         MakeNoiseSec,
         SuckPart,
-        NoFailSuck
+        NoFailSuck,
+        OnlyNoiseToAngerState,
+        SuckAtAngerState
     }
 
     //Inspector
@@ -47,6 +49,14 @@ public class SubMission : ScriptableObject
             case MissionType.NoFailSuck:
                 {
                     return $"흡혈 실패하지 않기";
+                }
+            case MissionType.OnlyNoiseToAngerState:
+                {
+                    return $"소음 유발만 이용해 싫증상태 만들기";
+                }
+            case MissionType.SuckAtAngerState:
+                {
+                    return $"분노 상태일 때 {mission.targetValue}번 흡혈";
                 }
         }
 
