@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public enum PLAYERSTATE
     {
         NONE,
+        IDLE,
         FLYING,
         LANDING,
         LANDED,
@@ -176,7 +177,14 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKey(keys.GetKeyCode(KeyBindings.KeyBindIndex.MoveDown))) verticalInput = -1;
         else verticalInput = 0;
 
-        SetMovementInput(new Vector3(keys.GetAxisRaw("Horizontal"), keys.GetAxisRaw("Vertical"), verticalInput));
+        float hor = keys.GetAxisRaw("Horizontal");
+        float ver = keys.GetAxisRaw("Vertical");
+
+        if (hor > 0) anim.SetTrigger("FlyRight");
+        else if (hor < 0) anim.SetTrigger("FlyLeft");
+        else anim.SetTrigger("FlyNormal");
+
+        SetMovementInput(new Vector3(hor, ver, verticalInput));
         SetRotationInput(new Vector2(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X")));
     }
     // Update is called once per frame
@@ -311,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(ray, 1);
         for(int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].transform == targetTransform) continue;
+            if (hits[i].transform == targetTransform || hits[i].transform == landing.landedTransform) continue;
 
             Debug.Log("Knockback Hit");
             landing.isLanded = false;
@@ -419,6 +427,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 hit = hits[i];
 
+                Debug.Log("Avoid");
 
                 if (hit.transform == targetTransform) continue;
                 if(landing.isLanded)

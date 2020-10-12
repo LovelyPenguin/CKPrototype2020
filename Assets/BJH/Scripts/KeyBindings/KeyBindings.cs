@@ -49,7 +49,7 @@ public class KeyBindings
                 return 0;
         }
 
-        float ret = 0;
+        int ret = 0;
         if (Input.GetKey(nagative)) ret -= 1;
         if (Input.GetKey(positive)) ret += 1;
 
