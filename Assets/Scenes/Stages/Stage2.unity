@@ -8279,9 +8279,9 @@ MonoBehaviour:
   minRange: 40
   maxRange: 80
   suckRageRate:
-  - 40
-  - 30
   - 20
+  - 15
+  - 10
   isSucking: 0
   scar: {fileID: 4349931327472306771, guid: bf8d8c328f4dc2041bd51d55cc8d6a26, type: 3}
 --- !u!4 &1749242936
@@ -10976,6 +10976,11 @@ PrefabInstance:
       propertyPath: triggerExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
       objectReference: {fileID: 0}
+    - target: {fileID: 1901687709886941896, guid: b429ac7cdc52af14188ff3e45c31726b,
+        type: 3}
+      propertyPath: triggerStay.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1901687711100066629, guid: b429ac7cdc52af14188ff3e45c31726b,
         type: 3}
       propertyPath: triggerStay.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -11000,6 +11005,11 @@ PrefabInstance:
         type: 3}
       propertyPath: triggerExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901687711100066629, guid: b429ac7cdc52af14188ff3e45c31726b,
+        type: 3}
+      propertyPath: triggerStay.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1901687711530460583, guid: b429ac7cdc52af14188ff3e45c31726b,
         type: 3}
