@@ -5,6 +5,14 @@ using UnityEngine.AI;
 
 public class AIMaster : MonoBehaviour
 {
+    public enum AIState
+    {
+        NORMAL,
+        ANOYING,
+        ANGRY,
+        RAGE
+    }
+
     private NavMeshAgent myAgent;
     private float setRandomMoveInterval = 0;
     private float setReactionSpeed = 0;
@@ -49,6 +57,7 @@ public class AIMaster : MonoBehaviour
     public float debugAngle;
     public float debugDistance;
     public float angryGauge;
+    public AIState currentState = AIState.NORMAL;
 
     // Start is called before the first frame update
     void Start()
