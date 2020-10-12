@@ -389,16 +389,6 @@ public class PlayerMovement : MonoBehaviour
 
         targetTransform.position = currentPos;
     }
-    void CamMovement()
-    {
-        //Cam Movement
-        targetCamPos = targetTransform.position;
-
-        currentCamPos = Vector3.SmoothDamp(currentCamPos, targetCamPos, ref currentCamPosVelocity, moveSmoothTime);
-
-        camRootTransform.position = currentCamPos;
-    }
-
     void CamRotation()
     {
         //if (!isRotating) return;
@@ -413,6 +403,15 @@ public class PlayerMovement : MonoBehaviour
         camRootTransform.rotation = Quaternion.Euler(currentCamRot);
 
         AvoidCamPenetration();
+    }
+    void CamMovement()
+    {
+        //Cam Movement
+        targetCamPos = targetTransform.position;
+
+        currentCamPos = Vector3.SmoothDamp(currentCamPos, targetCamPos, ref currentCamPosVelocity, moveSmoothTime);
+
+        camRootTransform.position = currentCamPos;
     }
 
     void AvoidCamPenetration()

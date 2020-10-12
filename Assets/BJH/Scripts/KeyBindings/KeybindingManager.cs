@@ -35,15 +35,15 @@ public class KeybindingManager : MonoBehaviour
 
     private void Update()
     {
-        //if(Input.GetKeyDown(keyBindings.GetKeyCode(KeyBindings.KeyBindIndex.ToggleSettings)))
-        //{
-        //    keyBindUI.SetActive(!keyBindUI.activeSelf);
+        if (Input.GetKeyDown(keyBindings.GetKeyCode(KeyBindings.KeyBindIndex.VeryNiceKey)))
+        {
+            keyBindUI.SetActive(!keyBindUI.activeSelf);
 
-        //    if (keyBindUI.activeSelf && btns.Count != (int)KeyBindings.KeyBindIndex.None)
-        //    {
-        //        SpawnBtns();
-        //    }
-        //}
+            if (keyBindUI.activeSelf && btns.Count != (int)KeyBindings.KeyBindIndex.None)
+            {
+                SpawnBtns();
+            }
+        }
     }
 
     private void OnGUI()
