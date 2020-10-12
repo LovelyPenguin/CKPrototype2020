@@ -12,6 +12,7 @@ public class GameSettings : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1f;
         if (!instance)
         {
             instance = this;

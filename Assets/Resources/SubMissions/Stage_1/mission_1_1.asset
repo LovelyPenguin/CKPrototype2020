@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: mission_1_1
   m_EditorClassIdentifier: 
   missionType: 0
-  targetValue: 3
-  bodyPartCode: 0
+  targetValue: 2
+  targetPart: 0
   currentValue: 0
   isCompleted: 0
   isFinished: 0

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b14453cf6793bb849b00af9407aa6539, type: 3}
-  m_Name: mission_1_3
+  m_Name: mission_1_2
   m_EditorClassIdentifier: 
-  missionType: 0
+  missionType: 3
   targetValue: 3
-  bodyPartCode: 0
+  targetPart: 0
   currentValue: 0
   isCompleted: 0
   isFinished: 0
