@@ -21,6 +21,8 @@ public class SubMission : ScriptableObject
     public float targetValue;
     [Tooltip("부위 흡혈용 프로퍼티입니다.\n 그 외의 미션들은 사용하지 않아도 됩니다.")]
     public BodyPart.PART targetPart;
+    [Tooltip("인간의 특정 상태가 요구되는 미션용 프로퍼티입니다.\n 그 외의 미션들은 사용하지 않아도 됩니다.")]
+    public AIMaster.AIState targetAngerState;
     //Inspector
 
     [HideInInspector]
@@ -52,11 +54,11 @@ public class SubMission : ScriptableObject
                 }
             case MissionType.OnlyNoiseToAngerState:
                 {
-                    return $"소음 유발만 이용해 싫증상태 만들기";
+                    return $"소음 유발만 이용해 {SubMissionManager.GetAngerStateString(mission.targetAngerState)}상태 만들기";
                 }
             case MissionType.SuckAtAngerState:
                 {
-                    return $"분노 상태일 때 {mission.targetValue}번 흡혈";
+                    return $"{SubMissionManager.GetAngerStateString(mission.targetAngerState)}상태일 때 {mission.targetValue}번 흡혈";
                 }
         }
 
@@ -91,18 +93,14 @@ public class SubMission : ScriptableObject
                 isFinished = false;
                 break;
             case MissionType.MakeNoiseSec:
-                currentValue = 0;
-                isCompleted = false;
-                isFinished = false;
-                break;
-            //case MissionType.SuckPart:
-            //    break;
+            case MissionType.SuckPart:
             case MissionType.SuckTimes:
+            case MissionType.OnlyNoiseToAngerState:
+            case MissionType.SuckAtAngerState:
                 currentValue = 0;
                 isCompleted = false;
                 isFinished = false;
                 break;
-
         }
     }
 }

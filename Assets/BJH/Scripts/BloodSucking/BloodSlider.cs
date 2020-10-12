@@ -123,16 +123,16 @@ public class BloodSlider : MonoBehaviour
         if(suckResult.state != STATE.FAILED)
         {
 
-            AIMaster ai = FindObjectOfType<AIMaster>();
+            AIMaster ai = SubMissionManager.instance.ai;
 
-            if(ai)
+            SubMissionManager.instance.OnSuck(suckResult);
+
+            if (ai)
             {
                 float value = BloodSuckingManager.instance.GetSuckRageRate(suckResult.state);
                 ai.AddAngryGauge(value);
-                
             }
 
-            SubMissionManager.instance.OnSuck(suckResult);
             suckEvent.Invoke();
         }
         else

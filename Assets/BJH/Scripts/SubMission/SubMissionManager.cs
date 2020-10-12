@@ -6,6 +6,9 @@ public class SubMissionManager : MonoBehaviour
 {
     public static SubMissionManager instance;
 
+    [HideInInspector]
+    public AIMaster ai;
+
     //Inspector
     [SerializeField] int stageNum = 0;
 
@@ -13,12 +16,13 @@ public class SubMissionManager : MonoBehaviour
 
     [SerializeField] Sprite clearedSpr;
     [SerializeField] Sprite notClearedSpr;
+    //Inspector
 
     public Sprite GetStarSprite(bool isCleared)
     {
         return isCleared ? clearedSpr : notClearedSpr;
     }
-    //Inspector
+
     private void Awake()
     {
         if (!instance) instance = this;
@@ -26,11 +30,22 @@ public class SubMissionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)) LoadMissions(stageNum);
+        SubMission mis;
+        for(int i = 0; i < missions.Count; i++)
+        {
+            mis = missions[i];
+            switch(mis.missionType)
+            {
+                case SubMission.MissionType.OnlyNoiseToAngerState:
+                    CheckOnlyNoiseToAngerState(missions[i]);
+                    break;
+            }
+        }
     }
 
     private void Start()
     {
+        ai = FindObjectOfType<AIMaster>();
         LoadMissions(stageNum);
     }
     void InitializeMissions()
@@ -64,11 +79,27 @@ public class SubMissionManager : MonoBehaviour
                     CheckSuckTimes(mis);
                     break;
                 case SubMission.MissionType.SuckPart:
-                    Debug.Log(mis.targetPart + ", " + result.bodyPart);
                     if (mis.targetPart == result.bodyPart)
                     {
                         mis.currentValue += 1;
                         CheckSuckPart(mis);
+                    }
+                    break;
+                case SubMission.MissionType.OnlyNoiseToAngerState:
+                    {
+                        if (mis.isFinished || mis.isCompleted) break;
+                        mis.isFinished = true;
+                        mis.isCompleted = false;
+                    }
+                    break;
+                case SubMission.MissionType.SuckAtAngerState:
+                    {
+                        Debug.Log(mis.targetAngerState + ", " + ai.currentState);
+                        if (mis.targetAngerState == ai.currentState)
+                        {
+                            mis.currentValue += 1;
+                            CheckSuckAtAngerState(mis);
+                        }
                     }
                     break;
                 default:
@@ -85,10 +116,14 @@ public class SubMissionManager : MonoBehaviour
         {
             mis = missions[i];
 
-            if (mis.missionType == SubMission.MissionType.MakeNoiseSec)
+            switch (mis.missionType)
             {
-                mis.currentValue += Time.deltaTime;
-                CheckMakeNoiseSec(mis);
+                case SubMission.MissionType.MakeNoiseSec:
+                    {
+                        mis.currentValue += Time.deltaTime;
+                        CheckMakeNoiseSec(mis);
+                        break;
+                    }
             }
         }
     }
@@ -144,11 +179,16 @@ public class SubMissionManager : MonoBehaviour
                         CheckSuckTimes(mission);
                     }
                     break;
-                //case SubMission.MissionType.SuckPart:
-                //    {
-                //        CheckSuckPart(mission);
-                //    }
-                //    break;
+                case SubMission.MissionType.SuckAtAngerState:
+                    {
+                        CheckSuckAtAngerState(mission);
+                    }
+                    break;
+                case SubMission.MissionType.SuckPart:
+                    {
+                        CheckSuckPart(mission);
+                    }
+                    break;
 
                 //잘못된 미션 삭제
                 default:
@@ -156,7 +196,6 @@ public class SubMissionManager : MonoBehaviour
                         missions.Remove(mission);
                     }
                     break;
-
             }
         }
     }
@@ -188,6 +227,25 @@ public class SubMissionManager : MonoBehaviour
             mission.isFinished = true;
         }
     }
+    void CheckSuckAtAngerState(SubMission mission)
+    {
+        if (mission.targetValue <= mission.currentValue)
+        {
+            mission.isCompleted = true;
+            mission.isFinished = true;
+        }
+    }
+    void CheckOnlyNoiseToAngerState(SubMission mission)
+    {
+        if (mission.isFinished || mission.isCompleted) return;
+
+        //미션 성공 조건 달성시
+        if (ai.currentState == mission.targetAngerState)
+        {
+            mission.isCompleted = true;
+            mission.isFinished = true;
+        }
+    }
     #endregion
 
     #region Methods:LoadMissions
@@ -209,4 +267,20 @@ public class SubMissionManager : MonoBehaviour
     }
 
     #endregion
+
+    public static string GetAngerStateString(AIMaster.AIState state)
+    {
+        switch(state)
+        {
+            case AIMaster.AIState.NORMAL:
+                return "평온";
+            case AIMaster.AIState.ANOYING:
+                return "싫증";
+            case AIMaster.AIState.ANGRY:
+                return "짜증";
+            case AIMaster.AIState.RAGE:
+                return "분노";
+        }
+        return "";
+    }
 }

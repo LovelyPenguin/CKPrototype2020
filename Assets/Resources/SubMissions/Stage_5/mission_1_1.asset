@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14453cf6793bb849b00af9407aa6539, type: 3}
   m_Name: mission_1_1
   m_EditorClassIdentifier: 
-  missionType: 0
-  targetValue: 6
+  missionType: 5
+  targetValue: 2
   targetPart: 0
+  targetAngerState: 0
   currentValue: 0
   isCompleted: 0
   isFinished: 0
