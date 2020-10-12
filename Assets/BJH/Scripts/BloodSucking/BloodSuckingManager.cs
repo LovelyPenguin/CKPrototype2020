@@ -103,4 +103,12 @@ public class BloodSuckingManager : MonoBehaviour
         int a = (int)state - 1;
         return suckRageRate[a];
     }
+
+    public GameObject scar;
+    public void AddScar()
+    {
+        GameObject temp = Instantiate(scar);
+        temp.transform.SetParent(playerMove.landing.landedTransform);
+        temp.transform.position = playerMove.transform.position - (playerMove.transform.up * 0.02f);
+    }
 }
