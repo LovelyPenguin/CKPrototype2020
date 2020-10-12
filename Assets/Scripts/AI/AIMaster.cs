@@ -10,7 +10,8 @@ public class AIMaster : MonoBehaviour
     private float setReactionSpeed = 0;
     private float timer = 0;
     private Color previousLightColor;
-    private PlayerMovement playerState;
+    [HideInInspector]
+    public PlayerMovement playerState;
     private Quaternion initParticleLocalRotation;
 
     [Header("Basic Setting")]
@@ -68,6 +69,7 @@ public class AIMaster : MonoBehaviour
         debugDistance = GetPlayerDistance();
 
         animator.SetFloat("angryGauge", angryGauge);
+        animator.SetFloat("safeDistance", debugDistance);
     }
 
     private float CalculateAngle(Vector3 target)

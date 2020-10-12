@@ -5,6 +5,7 @@ using UnityEngine;
 public class Seek : StateMachineBehaviour
 {
     public AIMaster enemy;
+    public float safeDistance;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,13 +18,12 @@ public class Seek : StateMachineBehaviour
     {
         enemy.Seek();
         if (enemy.GetPlayerAngle() <= enemy.attackAngle / 2 &&
-            (enemy.GetPlayerDistance() <= enemy.attackDistance && enemy.GetPlayerDistance() >= 0.15f))
+            (enemy.GetPlayerDistance() <= enemy.attackDistance))
         {
             animator.SetBool("isAttack", true);
         }
-
         if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
-            (enemy.GetPlayerDistance() <= enemy.seekDistance && enemy.GetPlayerDistance() >= 0.15f))
+            (enemy.GetPlayerDistance() <= enemy.seekDistance))
         {
             enemy.Seek();
         }
