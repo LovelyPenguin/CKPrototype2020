@@ -31,6 +31,7 @@ public class Attack : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy.SetAttack(false);
+        enemy.AttackExit();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

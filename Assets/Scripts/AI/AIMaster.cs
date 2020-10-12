@@ -11,6 +11,7 @@ public class AIMaster : MonoBehaviour
     private float timer = 0;
     private Color previousLightColor;
     private PlayerMovement playerState;
+    private Quaternion initParticleLocalRotation;
 
     [Header("Basic Setting")]
     public Transform player;
@@ -57,6 +58,7 @@ public class AIMaster : MonoBehaviour
         particle.Stop();
         previousLightColor = directLight.color;
         playerState = player.GetComponent<PlayerMovement>();
+        initParticleLocalRotation = particle.transform.localRotation;
     }
 
     // Update is called once per frame
@@ -104,7 +106,7 @@ public class AIMaster : MonoBehaviour
         if (randomMoveInterval <= setRandomMoveInterval)
         {
             myAgent.SetDestination(new Vector3(
-                Random.Range(-randomMoveRange, randomMoveRange), transform.position.y, 
+                Random.Range(-randomMoveRange, randomMoveRange), transform.position.y,
                 Random.Range(-randomMoveRange, randomMoveRange)));
             setRandomMoveInterval = 0;
         }
@@ -112,6 +114,7 @@ public class AIMaster : MonoBehaviour
 
     public void Seek()
     {
+
         Debug.Log("Seek Player");
         SetAttack(false);
         myAgent.isStopped = false;
@@ -121,16 +124,23 @@ public class AIMaster : MonoBehaviour
 
     public void Attack()
     {
+
         Debug.Log("Attack");
         myAgent.isStopped = true;
         setReactionSpeed += Time.deltaTime;
 
         transform.rotation = LookRotationTarget(player.position, rotationSpeed);
+        particle.transform.LookAt(player.transform, particle.transform.forward);
         if (setReactionSpeed <= reactionSpeed)
         {
             SetAttack(true);
         }
     }
+    public void AttackExit()
+    {
+        particle.transform.localRotation = initParticleLocalRotation;
+    }
+
     private IEnumerator FireOrder()
     {
         SetAttack(true);
@@ -203,20 +213,14 @@ public class AIMaster : MonoBehaviour
 
     public void IncreaseAngryGauge()
     {
-        if (playerState.state != PlayerMovement.PLAYERSTATE.LANDED)
-        {
-            angryGauge += Time.deltaTime * 2;
-            animator.SetFloat("angryGauge", angryGauge);
-        }
+        angryGauge += Time.deltaTime * 2;
+        animator.SetFloat("angryGauge", angryGauge);
     }
 
     public void IncreaseAngryGauge(float increasePercent)
     {
-        if (playerState.state != PlayerMovement.PLAYERSTATE.LANDED)
-        {
-            angryGauge += Time.deltaTime * increasePercent;
-            animator.SetFloat("angryGauge", angryGauge);
-        }
+        angryGauge += Time.deltaTime * increasePercent;
+        animator.SetFloat("angryGauge", angryGauge);
     }
 
     public void AddAngryGauge(float value)

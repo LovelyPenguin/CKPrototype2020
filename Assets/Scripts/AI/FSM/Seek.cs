@@ -17,13 +17,13 @@ public class Seek : StateMachineBehaviour
     {
         enemy.Seek();
         if (enemy.GetPlayerAngle() <= enemy.attackAngle / 2 &&
-            enemy.GetPlayerDistance() <= enemy.attackDistance)
+            (enemy.GetPlayerDistance() <= enemy.attackDistance && enemy.GetPlayerDistance() >= 0.15f))
         {
             animator.SetBool("isAttack", true);
         }
 
         if (enemy.GetPlayerAngle() <= enemy.seekAngle / 2 &&
-            enemy.GetPlayerDistance() <= enemy.seekDistance)
+            (enemy.GetPlayerDistance() <= enemy.seekDistance && enemy.GetPlayerDistance() >= 0.15f))
         {
             enemy.Seek();
         }
